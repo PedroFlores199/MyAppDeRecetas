@@ -155,16 +155,26 @@ fun PlatoDelDia (navController: NavController) {
                     .height(360.dp)
                     .clickable { navController.navigate(route = AppScreens.SecondScreen.route) }
             ) {
+                ConstraintLayout(Modifier.fillMaxSize()) {
 
+                    val (recetaDia, tituloReceta, descripcionReceta, tiempo, icono, barra) = createRefs()
 
                     Text(
                         text = "Receta del día",
                         style = TextStyle(
                             color = Color(color = 0xFF930D0D),
                             fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold ),
+                            fontWeight = FontWeight.Bold
+                        ),
                         modifier = Modifier
-                            .padding(top = 70.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+                            .padding(top = 100.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+                            .constrainAs(recetaDia){
+                                top.linkTo(parent.top)
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
+
+
+                            }
                     )
 
                     Text(
@@ -206,7 +216,7 @@ fun PlatoDelDia (navController: NavController) {
                     )
 
 
-
+                }
             }
 
             Image(
