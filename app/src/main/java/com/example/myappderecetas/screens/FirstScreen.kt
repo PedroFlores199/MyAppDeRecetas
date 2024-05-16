@@ -155,12 +155,8 @@ fun PlatoDelDia (navController: NavController) {
                     .height(360.dp)
                     .clickable { navController.navigate(route = AppScreens.SecondScreen.route) }
             ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
 
 
-                ) {
                     Text(
                         text = "Receta del día",
                         style = TextStyle(
@@ -185,39 +181,31 @@ fun PlatoDelDia (navController: NavController) {
                         overflow = TextOverflow.Ellipsis
 
                     )
-                    Row (
+                    Icon(
+                        painter = painterResource(id = R.drawable.time),
+                        contentDescription = null,
+                        tint = Grey,
                         modifier = Modifier
-                            .statusBarsPadding()
-                            .padding(start = 20.dp)
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Start,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.time),
-                            contentDescription = null,
-                            tint = Grey,
-                            modifier = Modifier
-                                .size(40.dp)
-                                .padding(end = 10.dp)
-                                .clickable { }
-                        )
-                        Box(
-                            modifier = Modifier
-                                .background(Color(color = 0xFF930D0D))
-                                .width(5.dp)
-                                .height(35.dp)
+                            .size(40.dp)
+                            .padding(end = 10.dp)
+                            .clickable { }
+                    )
+                    Box(
+                        modifier = Modifier
+                            .background(Color(color = 0xFF930D0D))
+                            .width(5.dp)
+                            .height(35.dp)
 
-                        )
-                        Text(
-                            modifier = Modifier
-                                .padding(start = 10.dp),
-                            text = "40 min",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp,
-                        )
-                    }
-                }
+                    )
+                    Text(
+                        modifier = Modifier
+                            .padding(start = 10.dp),
+                        text = "40 min",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
+                    )
+
+
 
             }
 
