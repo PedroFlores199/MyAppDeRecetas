@@ -155,10 +155,10 @@ fun PlatoDelDia (navController: NavController) {
                 .height(360.dp)
                 .clickable { navController.navigate(route = AppScreens.SecondScreen.route) }
         ) {
-            Box() {
+            Box {
                 ConstraintLayout() {
 
-                    val (recetaDia, tituloReceta, descripcionReceta, tiempo, icono, barra) = createRefs()
+                    val (recetaDia, tituloReceta, descripcionReceta, cuadroInfTiempo) = createRefs()
 
                     Text(
                         text = "Receta del día",
@@ -203,57 +203,66 @@ fun PlatoDelDia (navController: NavController) {
                         overflow = TextOverflow.Ellipsis
 
                     )
+
+
+
+                    Box(modifier = Modifier
+                        .constrainAs(cuadroInfTiempo){
+                        top.linkTo(descripcionReceta.top, margin = 60.dp)
+                        start.linkTo(parent.start, margin = 20.dp)
+                        })
+
+
+                    {
+
+                        ConstraintLayout() {
+
+                            val (tiempo, icono, barra) = createRefs()
+                            createHorizontalChain(
+                                icono,
+                                barra,
+                                tiempo,
+                                chainStyle = ChainStyle.Packed
+                            )
+
+                            Icon(
+                                painter = painterResource(id = R.drawable.time),
+                                contentDescription = null,
+                                tint = Grey,
+                                modifier = Modifier
+                                    .size(40.dp)
+                                    .constrainAs(icono) {
+                                        top.linkTo(parent.top)
+                                        start.linkTo(parent.start)
+                                    }
+                            )
+
+                            Box(
+                                modifier = Modifier
+                                    .background(Color(color = 0xFF930D0D))
+                                    .width(5.dp)
+                                    .height(35.dp)
+                                    .constrainAs(barra) {
+                                        start.linkTo(icono.start)
+                                    }
+
+                            )
+                            Text(
+                                modifier = Modifier
+                                    .constrainAs(tiempo) {
+                                        start.linkTo(barra.start)
+
+                                    },
+                                text = "40 min",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp,
+                            )
+
+                        }
+                    }
                 }
             }
-
-            Box() {
-
-                ConstraintLayout() {
-
-                    val (tiempo, icono, barra) = createRefs()
-                    createHorizontalChain(icono, barra, tiempo, chainStyle = ChainStyle.Packed)
-
-                    Icon(
-                        painter = painterResource(id = R.drawable.time),
-                        contentDescription = null,
-                        tint = Grey,
-                        modifier = Modifier
-                            .size(40.dp)
-                            .padding(end = 10.dp)
-                            .constrainAs(icono) {
-                                top.linkTo(parent.bottom)
-                                start.linkTo(parent.start)
-                                end.linkTo(parent.end)
-                            }
-                    )
-
-                    Box(
-                        modifier = Modifier
-                            .background(Color(color = 0xFF930D0D))
-                            .width(5.dp)
-                            .height(35.dp)
-                            .constrainAs(barra) {
-                                top.linkTo(parent.bottom)
-                                start.linkTo(icono.start)
-                                end.linkTo(parent.end)
-                            }
-
-                    )
-                    Text(
-                        modifier = Modifier
-                            .constrainAs(tiempo) {
-                                top.linkTo(parent.bottom)
-                                start.linkTo(barra.start)
-                                end.linkTo(parent.end)
-                            },
-                        text = "40 min",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp,
-                    )
-
-                }
             }
-}
             Image(
                 painter = painterResource(id = R.drawable.ramen_inicio),
                 contentDescription = null,
