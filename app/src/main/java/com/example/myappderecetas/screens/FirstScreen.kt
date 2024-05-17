@@ -137,25 +137,26 @@ fun ParallaxToolbar(navController: NavController) {
 @Composable
 fun PlatoDelDia (navController: NavController) {
 
+    Box(
+        modifier = Modifier
+            .padding(top = 30.dp),
+
+        ) {
+
+        Spacer(
+            modifier = Modifier.height(440.dp)
+        )
+
         Box(
             modifier = Modifier
-                .padding(top = 30.dp),
-
-            ) {
-
-            Spacer(
-                modifier = Modifier.height(440.dp)
-            )
-
-            Box(
-                modifier = Modifier
-                    .background(color = Color.White)
-                    .align(Alignment.BottomCenter)
-                    .fillMaxSize()
-                    .height(360.dp)
-                    .clickable { navController.navigate(route = AppScreens.SecondScreen.route) }
-            ) {
-                ConstraintLayout(Modifier.fillMaxSize()) {
+                .background(color = Color.White)
+                .align(Alignment.BottomCenter)
+                .fillMaxSize()
+                .height(360.dp)
+                .clickable { navController.navigate(route = AppScreens.SecondScreen.route) }
+        ) {
+            Box() {
+                ConstraintLayout() {
 
                     val (recetaDia, tituloReceta, descripcionReceta, tiempo, icono, barra) = createRefs()
 
@@ -168,7 +169,7 @@ fun PlatoDelDia (navController: NavController) {
                         ),
                         modifier = Modifier
                             .padding(top = 100.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
-                            .constrainAs(recetaDia){
+                            .constrainAs(recetaDia) {
                                 top.linkTo(parent.top)
                                 start.linkTo(parent.start)
                                 end.linkTo(parent.end)
@@ -180,17 +181,38 @@ fun PlatoDelDia (navController: NavController) {
                     Text(
                         text = "Ramen con udon, shiitakes, huevo y langostinos",
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(bottom = 20.dp, start = 20.dp, end = 20.dp)
+                        modifier = Modifier
+                            .padding(bottom = 20.dp, start = 20.dp, end = 20.dp)
+                            .constrainAs(tituloReceta) {
+                                top.linkTo(recetaDia.bottom)
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
+                            }
                     )
 
                     Text(
                         text = "¡Hoy, la cena japonesa la hacemos en casa! Prepárales un ramen con udon, setas shiitake, huevo, espinacas y langostinos. Haz la lista de la compra con ingredientes orientales para que quede perfecto.",
                         modifier = Modifier
-                            .padding(bottom = 20.dp, start = 20.dp, end = 20.dp),
+                            .padding(bottom = 20.dp, start = 20.dp, end = 20.dp)
+                            .constrainAs(descripcionReceta) {
+                                top.linkTo(tituloReceta.bottom)
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
+                            },
                         maxLines = 3,
                         overflow = TextOverflow.Ellipsis
 
                     )
+                }
+            }
+
+            Box() {
+
+                ConstraintLayout() {
+
+                    val (tiempo, icono, barra) = createRefs()
+                    createHorizontalChain(icono, barra, tiempo, chainStyle = ChainStyle.Packed)
+
                     Icon(
                         painter = painterResource(id = R.drawable.time),
                         contentDescription = null,
@@ -198,27 +220,40 @@ fun PlatoDelDia (navController: NavController) {
                         modifier = Modifier
                             .size(40.dp)
                             .padding(end = 10.dp)
-                            .clickable { }
+                            .constrainAs(icono) {
+                                top.linkTo(parent.bottom)
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
+                            }
                     )
+
                     Box(
                         modifier = Modifier
                             .background(Color(color = 0xFF930D0D))
                             .width(5.dp)
                             .height(35.dp)
+                            .constrainAs(barra) {
+                                top.linkTo(parent.bottom)
+                                start.linkTo(icono.start)
+                                end.linkTo(parent.end)
+                            }
 
                     )
                     Text(
                         modifier = Modifier
-                            .padding(start = 10.dp),
+                            .constrainAs(tiempo) {
+                                top.linkTo(parent.bottom)
+                                start.linkTo(barra.start)
+                                end.linkTo(parent.end)
+                            },
                         text = "40 min",
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp,
                     )
 
-
                 }
             }
-
+}
             Image(
                 painter = painterResource(id = R.drawable.ramen_inicio),
                 contentDescription = null,
@@ -229,9 +264,9 @@ fun PlatoDelDia (navController: NavController) {
                     .clickable { navController.navigate(route = AppScreens.SecondScreen.route) }
             )
 
-        }
 
     }
+}
 
 
 @Composable
