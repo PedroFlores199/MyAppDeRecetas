@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.myappderecetas.R
@@ -208,22 +209,16 @@ fun PlatoDelDia (navController: NavController) {
 
                     Box(modifier = Modifier
                         .constrainAs(cuadroInfTiempo){
-                        top.linkTo(descripcionReceta.top, margin = 60.dp)
+                        top.linkTo(descripcionReceta.top, margin = 90.dp)
                         start.linkTo(parent.start, margin = 20.dp)
                         })
 
 
                     {
 
-                        ConstraintLayout() {
+                        ConstraintLayout {
 
                             val (tiempo, icono, barra) = createRefs()
-                            createHorizontalChain(
-                                icono,
-                                barra,
-                                tiempo,
-                                chainStyle = ChainStyle.Packed
-                            )
 
                             Icon(
                                 painter = painterResource(id = R.drawable.time),
@@ -243,7 +238,8 @@ fun PlatoDelDia (navController: NavController) {
                                     .width(5.dp)
                                     .height(35.dp)
                                     .constrainAs(barra) {
-                                        start.linkTo(icono.start)
+                                        start.linkTo(icono.start, margin = 50.dp)
+                                        end.linkTo(tiempo.start, margin = 10.dp)
                                     }
 
                             )
@@ -251,6 +247,9 @@ fun PlatoDelDia (navController: NavController) {
                                 modifier = Modifier
                                     .constrainAs(tiempo) {
                                         start.linkTo(barra.start)
+                                        top.linkTo(barra.top)
+                                        bottom.linkTo(barra.bottom)
+                                        end.linkTo(parent.end)
 
                                     },
                                 text = "40 min",
