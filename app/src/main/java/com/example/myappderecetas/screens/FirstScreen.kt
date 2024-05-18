@@ -73,15 +73,16 @@ fun FirstScreen (navController: NavController) {
 
 @Composable
 fun MainFragment(navController: NavController ) {
+    Box (Modifier.fillMaxSize()){
+        Background()
+        LazyColumn() {
+            item {
+                ParallaxToolbar(navController)
+                PlatoDelDia(navController)
+                RecetasDeLaSemana()
+            }
 
-    Background()
-    LazyColumn () {
-        item {
-            ParallaxToolbar(navController)
-            PlatoDelDia(navController)
-            RecetasDeLaSemana()
         }
-
     }
 }
 
@@ -167,7 +168,7 @@ fun PlatoDelDia (navController: NavController) {
             Box {
                 ConstraintLayout() {
 
-                    val (recetaDia, tituloReceta, descripcionReceta, cuadroInfTiempo) = createRefs()
+                    val (recetaDia, tituloReceta, descripcionReceta, cuadroInfTiempo, like) = createRefs()
 
                     Text(
                         text = "Receta del día",
@@ -216,9 +217,9 @@ fun PlatoDelDia (navController: NavController) {
 
 
                     Box(modifier = Modifier
-                        .constrainAs(cuadroInfTiempo){
-                        top.linkTo(descripcionReceta.top, margin = 90.dp)
-                        start.linkTo(parent.start, margin = 20.dp)
+                        .constrainAs(cuadroInfTiempo) {
+                            top.linkTo(descripcionReceta.top, margin = 90.dp)
+                            start.linkTo(parent.start, margin = 20.dp)
                         })
 
 
@@ -264,27 +265,33 @@ fun PlatoDelDia (navController: NavController) {
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 20.sp,
                             )
-
-
-
-
                         }
                     }
-                }
+                    Box (modifier = Modifier
+                        .size(100.dp)
+                        .constrainAs(like) {
+                            top.linkTo(descripcionReceta.top, margin = 60.dp)
+                            end.linkTo(parent.end, margin = 20.dp)
+                        }){
+                        val composition by rememberLottieComposition(
+                            spec = LottieCompositionSpec.RawRes(
+                                R.raw.like3
+                            )
+                        )
 
-                val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.like3))
+                        val progress by animateLottieCompositionAsState(
+                            composition = composition,
+                            iterations = LottieConstants.IterateForever
+                        )
 
-                val progress by animateLottieCompositionAsState(
-                    composition = composition,
-                    iterations = LottieConstants.IterateForever
-                )
-
-                LottieAnimation(
-                    composition = composition,
-                    progress = {
-                        progress
+                        LottieAnimation(
+                            composition = composition,
+                            progress = {
+                                progress
+                            }
+                        )
                     }
-                )
+                }
             }
             }
             Image(
@@ -334,6 +341,17 @@ fun RecetasDeLaSemana () {
             modifier = Modifier
                 .padding(bottom = 30.dp, start = 50.dp, end = 40.dp)
         )
+
+        Box(){
+            Image(
+                painter = painterResource(id = R.drawable.sushi),
+                contentDescription = null,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(40.dp))
+                    .clickable { }
+            )
+
+        }
 
     }
 
