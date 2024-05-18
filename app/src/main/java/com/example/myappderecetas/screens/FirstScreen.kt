@@ -263,7 +263,7 @@ fun PlatoDelDia (navController: NavController) {
                                 fontSize = 20.sp,
                             )
 
-                            
+
                             val preloaderLottieComposition by rememberLottieComposition(
                                 LottieCompositionSpec.RawRes(
                                     R.raw.like
