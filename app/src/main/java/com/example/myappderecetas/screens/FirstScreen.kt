@@ -24,6 +24,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,6 +42,11 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.myappderecetas.R
 import com.example.myappderecetas.navegation.AppScreens
 import com.example.myappderecetas.ui.theme.Grey
@@ -48,7 +54,7 @@ import com.example.myappderecetas.ui.theme.Grey
 
 @Preview
 @Composable
-fun MyPreview (navController: NavController = rememberNavController()) {
+fun MyPreviewMain (navController: NavController = rememberNavController()) {
     MainFragment(navController)
 }
 
@@ -257,6 +263,24 @@ fun PlatoDelDia (navController: NavController) {
                                 fontSize = 20.sp,
                             )
 
+                            
+                            val preloaderLottieComposition by rememberLottieComposition(
+                                LottieCompositionSpec.RawRes(
+                                    R.raw.like
+                                )
+                            )
+
+                            val preloaderProgress by animateLottieCompositionAsState(
+                                preloaderLottieComposition,
+                                iterations = LottieConstants.IterateForever,
+                                isPlaying = true
+                            )
+
+
+                            LottieAnimation(
+                                composition = preloaderLottieComposition,
+                                progress = preloaderProgress,
+                            )
                         }
                     }
                 }
