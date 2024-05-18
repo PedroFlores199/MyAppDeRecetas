@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,13 +21,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester.Companion.createRefs
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -37,19 +36,18 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
-import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.myappderecetas.R
 import com.example.myappderecetas.navegation.AppScreens
 import com.example.myappderecetas.ui.theme.Grey
+import androidx.activity.compose.setContent
 
 
 @Preview
@@ -61,11 +59,15 @@ fun MyPreviewMain (navController: NavController = rememberNavController()) {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun FirstScreen (navController: NavController) {
+
     //Esto es un componente para estrupturar componentes basicos de una pantalla
     Scaffold {
         MainFragment(navController)
+
     }
 }
+
+
 
 
 
@@ -264,26 +266,25 @@ fun PlatoDelDia (navController: NavController) {
                             )
 
 
-                            val preloaderLottieComposition by rememberLottieComposition(
-                                LottieCompositionSpec.RawRes(
-                                    R.raw.like
-                                )
-                            )
-
-                            val preloaderProgress by animateLottieCompositionAsState(
-                                preloaderLottieComposition,
-                                iterations = LottieConstants.IterateForever,
-                                isPlaying = true
-                            )
 
 
-                            LottieAnimation(
-                                composition = preloaderLottieComposition,
-                                progress = preloaderProgress,
-                            )
                         }
                     }
                 }
+
+                val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.like3))
+
+                val progress by animateLottieCompositionAsState(
+                    composition = composition,
+                    iterations = LottieConstants.IterateForever
+                )
+
+                LottieAnimation(
+                    composition = composition,
+                    progress = {
+                        progress
+                    }
+                )
             }
             }
             Image(
@@ -295,8 +296,6 @@ fun PlatoDelDia (navController: NavController) {
                     .align(Alignment.TopCenter)
                     .clickable { navController.navigate(route = AppScreens.SecondScreen.route) }
             )
-
-
     }
 }
 
