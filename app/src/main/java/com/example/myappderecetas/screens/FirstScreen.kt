@@ -21,7 +21,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -47,7 +46,6 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.example.myappderecetas.R
 import com.example.myappderecetas.navegation.AppScreens
 import com.example.myappderecetas.ui.theme.Grey
-import androidx.activity.compose.setContent
 
 
 @Preview
@@ -63,7 +61,6 @@ fun FirstScreen (navController: NavController) {
     //Esto es un componente para estrupturar componentes basicos de una pantalla
     Scaffold {
         MainFragment(navController)
-
     }
 }
 
@@ -73,18 +70,18 @@ fun FirstScreen (navController: NavController) {
 
 @Composable
 fun MainFragment(navController: NavController ) {
-    Box (Modifier.fillMaxSize()){
-        Background()
-        LazyColumn() {
-            item {
-                ParallaxToolbar(navController)
-                PlatoDelDia(navController)
-                RecetasDeLaSemana()
-            }
 
+    Background()
+    LazyColumn {
+        item {
+            ParallaxToolbar(navController)
+            PlatoDelDia(navController)
+            RecetasDeLaSemana()
         }
+
     }
 }
+
 
 @Composable
 fun Background() {
@@ -166,7 +163,7 @@ fun PlatoDelDia (navController: NavController) {
                 .clickable { navController.navigate(route = AppScreens.SecondScreen.route) }
         ) {
             Box {
-                ConstraintLayout() {
+                ConstraintLayout {
 
                     val (recetaDia, tituloReceta, descripcionReceta, cuadroInfTiempo, like) = createRefs()
 
@@ -200,6 +197,8 @@ fun PlatoDelDia (navController: NavController) {
                             }
                     )
 
+                    //Nota importante: Para que el texto tenga el mismo tamaño se pode sp en vez de dp
+
                     Text(
                         text = "¡Hoy, la cena japonesa la hacemos en casa! Prepárales un ramen con udon, setas shiitake, huevo, espinacas y langostinos. Haz la lista de la compra con ingredientes orientales para que quede perfecto.",
                         modifier = Modifier
@@ -209,9 +208,9 @@ fun PlatoDelDia (navController: NavController) {
                                 start.linkTo(parent.start)
                                 end.linkTo(parent.end)
                             },
+                        fontSize = 14.sp, // Tamaño del texto en sp
                         maxLines = 3,
                         overflow = TextOverflow.Ellipsis
-
                     )
 
 
@@ -306,7 +305,7 @@ fun PlatoDelDia (navController: NavController) {
     }
 }
 
-
+@Preview
 @Composable
 fun RecetasDeLaSemana () {
     Spacer(
@@ -341,19 +340,32 @@ fun RecetasDeLaSemana () {
             modifier = Modifier
                 .padding(bottom = 30.dp, start = 50.dp, end = 40.dp)
         )
+    }
+        Box (Modifier
+            .fillMaxSize()
+            .padding(10.dp)
+        ){
 
-        Box(){
+            Spacer(
+                modifier = Modifier.height(800.dp)
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth() // Use fillMaxWidth instead of fillMaxSize to allow height adjustment
+                    .height(700.dp)
+                    .clip(RoundedCornerShape(40.dp))
+                    .background(Color(color = 0xFF5C0A0A))
+                    .align(Alignment.BottomCenter)
+            )
             Image(
                 painter = painterResource(id = R.drawable.sushi),
                 contentDescription = null,
                 modifier = Modifier
                     .clip(RoundedCornerShape(40.dp))
+                    .align(Alignment.TopCenter)
                     .clickable { }
             )
 
         }
-
     }
-
-
-}
