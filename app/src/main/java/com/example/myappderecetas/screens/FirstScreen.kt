@@ -55,7 +55,7 @@ import androidx.compose.ui.layout.ContentScale
 @Preview
 @Composable
 fun MyPreviewMain (navController: NavController = rememberNavController()) {
-    MainFragment(navController)
+    FragmentoProncipal(navController)
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -64,7 +64,7 @@ fun FirstScreen (navController: NavController) {
 
     //Esto es un componente para estrupturar componentes basicos de una pantalla
     Scaffold {
-        MainFragment(navController)
+        FragmentoProncipal(navController)
     }
 }
 
@@ -73,33 +73,27 @@ fun FirstScreen (navController: NavController) {
 
 
 @Composable
-fun MainFragment(navController: NavController ) {
+fun FragmentoProncipal (navController: NavController ) {
 
-    Background()
-    LazyColumn {
-        item {
-            ParallaxToolbar(navController)
-            PlatoDelDia(navController)
-            RecetasDeLaSemana()
-            SwipeablePages ()
-        }
-
-    }
-}
-
-
-@Composable
-fun Background() {
     Column(
         modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()
             .background(color = Color(android.graphics.Color.parseColor("#f7f5f2")))
     )
-    {
-
+    {    LazyColumn {
+        item {
+            ParallaxToolbar(navController)
+            PlatoDelDia(navController)
+            RecetasDeLaSemana()
+            SwipeablePages()
+        }
+    }
     }
 }
+
+
+
 
 @Composable
 fun ParallaxToolbar(navController: NavController) {
