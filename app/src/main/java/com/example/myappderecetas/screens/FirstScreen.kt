@@ -1,6 +1,7 @@
 package com.example.myappderecetas.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,6 +19,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -46,6 +49,7 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.example.myappderecetas.R
 import com.example.myappderecetas.navegation.AppScreens
 import com.example.myappderecetas.ui.theme.Grey
+import androidx.compose.ui.layout.ContentScale
 
 
 @Preview
@@ -77,6 +81,7 @@ fun MainFragment(navController: NavController ) {
             ParallaxToolbar(navController)
             PlatoDelDia(navController)
             RecetasDeLaSemana()
+            SwipeablePages ()
         }
 
     }
@@ -329,6 +334,7 @@ fun RecetasDeLaSemana () {
             modifier = Modifier
                 .padding(bottom = 20.dp, start = 20.dp, end = 20.dp)
         )
+        /*
         Text(
             text = "Recetas sencillas y buenas para esta semana",
             style = TextStyle(
@@ -338,34 +344,107 @@ fun RecetasDeLaSemana () {
             ),
 
             modifier = Modifier
-                .padding(bottom = 30.dp, start = 50.dp, end = 40.dp)
-        )
+                .padding(bottom = 20.dp, start = 50.dp, end = 60.dp)
+        )*/
     }
-        Box (Modifier
+}
+    val comida = listOf(
+        R.drawable.sushi,
+        R.drawable.cocarrois
+    )
+
+
+
+@OptIn(ExperimentalFoundationApi::class)
+@Preview
+@Composable
+fun SwipeablePages () {
+
+    val comida = listOf(
+        R.drawable.sushi,
+        R.drawable.cocarrois
+    )
+    val tituloComidaSem = listOf(
+        "Sushi",
+        "Cocarris"
+    )
+    val subTituloComidaSem = listOf(
+        "La cocina tradicional japonesa se fundamenta principalmente en el arroz blanco, al igual que muchos países asiáticos vecinos, por la facilidad para cultivarlo en esas zonas y la versatilidad para usarlo como base o como acompañamiento de muchos platos.",
+        "La receta de cocarrois es una delicia originaria de Mallorca y también de Ibiza. Se caracteriza por tener como relleno una mezcla de diversas verduras con condimentos básicos."
+    )
+
+    var pagerState = rememberPagerState(initialPage = 0) {
+        comida.size
+    }
+
+    Box(
+        modifier = Modifier
             .fillMaxSize()
             .padding(10.dp)
-        ){
+    ) {
 
-            Spacer(
-                modifier = Modifier.height(800.dp)
-            )
+
+        HorizontalPager(state = pagerState) { index ->
 
             Box(
                 modifier = Modifier
                     .fillMaxWidth() // Use fillMaxWidth instead of fillMaxSize to allow height adjustment
-                    .height(700.dp)
+                    .height(450.dp)
                     .clip(RoundedCornerShape(40.dp))
                     .background(Color(color = 0xFF5C0A0A))
                     .align(Alignment.BottomCenter)
-            )
-            Image(
-                painter = painterResource(id = R.drawable.sushi),
-                contentDescription = null,
-                modifier = Modifier
-                    .clip(RoundedCornerShape(40.dp))
-                    .align(Alignment.TopCenter)
-                    .clickable { }
-            )
+                    .clickable {  }
+            ) {
+                ConstraintLayout {
+                    val (titulo, imagen, subTitulo) = createRefs()
+                    Image(
+                        painter = painterResource(id = comida[index]),
+                        contentDescription = null,
+                        contentScale = ContentScale.Inside,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(40.dp))
+                            .clickable { }
+                            .constrainAs(imagen) {
+                                top.linkTo(parent.top)
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
+                            }
+                    )
+                    Text(
+                        text = tituloComidaSem[index],
+                        color = Color.White,
+                        style = TextStyle(
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.Bold
+                        ),
+                        modifier = Modifier.constrainAs(titulo) {
+                            top.linkTo(imagen.bottom, margin = 20.dp)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        }
+                    )
+                    Text(
+                        text = subTituloComidaSem[index],
+                        color = Color.White,
+                        style = TextStyle(
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Bold
+                        ),
 
+                        modifier = Modifier.padding(bottom = 20.dp, start = 20.dp, end = 20.dp)
+                            .constrainAs(subTitulo) {
+                            top.linkTo(titulo.bottom, margin = 20.dp)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        }
+                    )
+
+                }
+            }
         }
     }
+}
+
+
+
+
