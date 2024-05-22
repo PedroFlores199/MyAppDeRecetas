@@ -101,7 +101,7 @@ fun ParallaxToolbar(navController: NavController) {
     Row(
         modifier = Modifier
             .statusBarsPadding()
-            .padding(top = 10.dp)
+            .padding(10.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
