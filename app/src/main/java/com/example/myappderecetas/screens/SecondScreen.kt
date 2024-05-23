@@ -1,6 +1,7 @@
 package com.example.myappderecetas.screens
 
 import android.annotation.SuppressLint
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -28,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -66,7 +69,8 @@ fun FragmentoSegundario (navController: NavController) {
                 ParallaxSecToolbar(navController)
                 FotoReceta()
                 InfoReceta()
-                ListaIngredientes()
+                TituloComida()
+                Ingredientes()
             }
         }
     }
@@ -131,6 +135,8 @@ fun FotoReceta (){
         )
     }
 }
+
+
 
 @Composable
 fun InfoReceta () {
@@ -232,17 +238,60 @@ fun InfoReceta () {
     }
 }
 
+val tituloComidaSem = listOf(
+    "Sushi",
+    "Cocarris"
+)
+val subTituloComidaSem = listOf(
+    "La cocina tradicional japonesa se fundamenta principalmente en el arroz blanco, al igual que muchos países asiáticos vecinos, por la facilidad para cultivarlo en esas zonas y la versatilidad para usarlo como base o como acompañamiento de muchos platos.",
+    "La receta de cocarrois es una delicia originaria de Mallorca y también de Ibiza. Se caracteriza por tener como relleno una mezcla de diversas verduras con condimentos básicos."
+)
+
+
 @Composable
-fun ListaIngredientes() {
-    Column(
+fun TituloComida() {
+    Text(
+        text = tituloComidaSem[0],
+        color = Color.Black,
+        style = TextStyle(
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold
+        ),
+    )
+    Text(
+        text = subTituloComidaSem[0],
+        color = Color.Black,
+        style = TextStyle(
+            fontSize = 18.sp
+        )
+    )
+}
+
+val ingredientesSem = listOf("150 gramos de fideos noodles", "2 huevos", "Cebolletas para usar la parte verde", "1 alga nori", "1 litro de caldo de pollo", "6 setas shiitake", "1 pechugas de pollo", "4 dientes de ajo", "80 mililitros de salsa de soja", "2 cucharadas de aceite de oliva", "1 trozo de jengibre" , "30 gramos de mantequilla", "2 cucharaditas de azúcar", "1 cucharadita de sal")
+
+@Composable
+fun Ingredientes () {
+    Text(
+        text = "Ingredientes",
+        color = Color.Black,
+        style = TextStyle(
+            fontSize = 28.sp,
+        )
+    )
+    Spacer(
         modifier = Modifier
-            .fillMaxWidth()
-            .background(color = Color(android.graphics.Color.parseColor("#f7f5f2")))
-    ) {
-        LazyColumn {
-            item {  }
-        }
+            .height(20.dp)
+    )
+    for (i in 0..2) {
+        Text(
+            text = ingredientesSem[i],
+            color = Color.Black,
+            style = TextStyle(
+                fontSize = 28.sp,
+            )
+        )
     }
+
 }
 
 
