@@ -1,7 +1,6 @@
 package com.example.myappderecetas.screens
 
 import android.annotation.SuppressLint
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,9 +17,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -40,6 +35,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.myappderecetas.R
 import com.example.myappderecetas.ui.theme.Grey
+import com.example.myappderecetas.ui.theme.fontFamily
 
 
 @Preview
@@ -250,49 +246,72 @@ val subTituloComidaSem = listOf(
 
 @Composable
 fun TituloComida() {
-    Text(
-        text = tituloComidaSem[0],
-        color = Color.Black,
-        style = TextStyle(
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold
-        ),
-    )
-    Text(
-        text = subTituloComidaSem[0],
-        color = Color.Black,
-        style = TextStyle(
-            fontSize = 18.sp
+
+        //val (titulo, descripcion) = createRefs()
+
+        Text(
+            text = tituloComidaSem[0],
+            fontFamily = fontFamily,
+            color = Color.Black,
+            style = TextStyle(
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+            ),
+            modifier = Modifier
+                .padding(top = 10.dp, bottom = 5.dp, start = 20.dp, end = 10.dp)
+
+                /*.constrainAs(titulo) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }*/
         )
-    )
-}
+
+        Text(
+            text = subTituloComidaSem[0],
+            color = Color.Black,
+            style = TextStyle(
+                fontSize = 18.sp),
+            modifier = Modifier
+                .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 10.dp)
+                /*.constrainAs(descripcion) {
+                    top.linkTo(titulo.top, margin = 50.dp)
+                    start.linkTo(parent.start)
+                    bottom.linkTo(parent.bottom)
+                    end.linkTo(parent.end)
+                }*/
+        )
+    }
 
 val ingredientesSem = listOf("150 gramos de fideos noodles", "2 huevos", "Cebolletas para usar la parte verde", "1 alga nori", "1 litro de caldo de pollo", "6 setas shiitake", "1 pechugas de pollo", "4 dientes de ajo", "80 mililitros de salsa de soja", "2 cucharadas de aceite de oliva", "1 trozo de jengibre" , "30 gramos de mantequilla", "2 cucharaditas de azúcar", "1 cucharadita de sal")
 
 @Composable
 fun Ingredientes () {
+
     Text(
-        text = "Ingredientes",
+        text = ("Ingredientes"),
+        fontFamily = fontFamily,
         color = Color.Black,
         style = TextStyle(
             fontSize = 28.sp,
-        )
-    )
-    Spacer(
+            fontWeight = FontWeight.Bold,
+        ),
         modifier = Modifier
-            .height(20.dp)
+            .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
     )
-    for (i in 0..2) {
+
+    for (i in 0 until ingredientesSem.size) {
         Text(
             text = ingredientesSem[i],
             color = Color.Black,
             style = TextStyle(
-                fontSize = 28.sp,
-            )
-        )
+                fontSize = 18.sp),
+            modifier = Modifier
+                .padding(top = 2.dp, bottom = 2.dp, start = 20.dp, end = 10.dp))
     }
-
 }
+
+
 
 
 

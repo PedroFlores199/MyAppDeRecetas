@@ -180,8 +180,6 @@ fun PlatoDelDia (navController: NavController) {
                                 top.linkTo(parent.top)
                                 start.linkTo(parent.start)
                                 end.linkTo(parent.end)
-
-
                             }
                     )
 
