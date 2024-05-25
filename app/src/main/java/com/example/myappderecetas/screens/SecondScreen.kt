@@ -1,6 +1,7 @@
 package com.example.myappderecetas.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,13 +19,18 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -110,28 +117,24 @@ fun ParallaxSecToolbar(navController: NavController) {
             modifier = Modifier
                 .size(50.dp)
                 .clickable { }
-            //.padding(top = 20.dp, end = 16.dp)
         )
-
     }
 }
 
-val tituloComidaSem = listOf(
-    "Sushi",
-    "Cocarris"
-)
-val subTituloComidaSem = listOf(
-    "La cocina tradicional japonesa se fundamenta principalmente en el arroz blanco, al igual que muchos países asiáticos vecinos, por la facilidad para cultivarlo en esas zonas y la versatilidad para usarlo como base o como acompañamiento de muchos platos.",
-    "La receta de cocarrois es una delicia originaria de Mallorca y también de Ibiza. Se caracteriza por tener como relleno una mezcla de diversas verduras con condimentos básicos."
-)
+val descripcionGyozas = listOf("Las gyozas, también conocidas como empanadillas japonesas, son una auténtica delicia y muy fáciles de hacer.", "Con esta receta haremos unas 35 gyozas por menos de 10 euros, ridículo cuando lo comparas a los precios que tienen en los restaurantes (5 gyozas, por 5 euros). Congela todas las gyozas que no vayas a usar, y cuando tengas que hacerte la comida muy rápido, cocínalas exactamente igual que las cocinarías recién formadas, pero añade 2 minutos más dentro de la sartén para que se descongelen completamente. ¡Estarán como recién echas! ")
+val masaGyozas = listOf("310g de harina", "155ml de agua", "Una pizca de sal")
+val rellenoDeGyozas = listOf ("375 g de carne picada de cerdo", "1,50cm de jengible", "1/4 de cucharada (chuchara grande) de vino de arroz o de vino blanco", "1/8 de repollo", "1/2 Diente de ajo", "3 ajetes", "1/2 cucharada de salsa de soja", "3 granos de pimienta blanca", "Pizca de sal", "1/2 cucharadilla de azúcar" )
+val salsaGyozas = listOf("37.5 ml de salsa de soja ", "12,5 ml de vinagre de arroz ", "Sesamo")
+val preparacionMasa = listOf("En un bol añade la harina de trigo y la sal. ",
+    "Llevamos a ebullición el agua y en cuanto empiece a hervir, lo echamos en el bol y mezclamos bien",
+    "Transfiere la masa a una superficie y amasa de 7 a 8 minutos, o hasta que sea elástica y lisa",
+    "Cubre la masa con un trapo húmedo y déjala reposar una hora a temperatura ambiente",
+    "Pon uno de los trozos con el lado del corte mirando hacia arriba y aplástalo con la palma de la mano",
+    "Corta un churro en 16 trozos de igual tamaño.",
+    "Pon uno de los trozos con el lado del corte mirando hacia arriba, y aplástalo con la palma de la mano",
+    "Con un rodillo, estira la masa desde fuera hacia adentro, girando el disco poco a poco, dándole forma circular y dejando el centro más grueso que el borde", "Lo estiramos un poco con la mano y ya estaría hecha la masa, lista para poner el relleno dentro")
+val imagenesPeparaciaMasa = listOf(R.drawable.sushi, R.drawable.cocarrois, R.drawable.sushi, R.drawable.cocarrois, R.drawable.sushi, R.drawable.cocarrois, R.drawable.sushi, R.drawable.cocarrois,R.drawable.sushi, R.drawable.cocarrois)
 
-val ingredientesSem = listOf("150 gramos de fideos noodles", "2 huevos", "Cebolletas para usar la parte verde", "1 alga nori", "1 litro de caldo de pollo", "6 setas shiitake", "1 pechugas de pollo", "4 dientes de ajo", "80 mililitros de salsa de soja", "2 cucharadas de aceite de oliva", "1 trozo de jengibre" , "30 gramos de mantequilla", "2 cucharaditas de azúcar", "1 cucharadita de sal")
-
-val peronas = listOf("4", "3")
-
-val tiempoCocinado = listOf("40 min", "1 Hora")
-
-val preparacion = listOf("10 min", "10 min")
 
 @Composable
 fun FotoReceta (){
@@ -142,10 +145,11 @@ fun FotoReceta (){
 
     Box() {
         Image(
-            painter = painterResource(id = R.drawable.ramen_seg_pan),
+            painter = painterResource(id = R.drawable.gyozasresultado),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
+
         )
     }
 }
@@ -183,7 +187,7 @@ fun InfoReceta () {
 
                     )
                     Text(
-                        text = tiempoCocinado[1],
+                        text = "2h 30min",
                         fontWeight = FontWeight.Bold,
                         fontSize = 25.sp,
                         modifier = Modifier
@@ -234,7 +238,7 @@ fun InfoReceta () {
                                 end.linkTo(parent.end)
 
                             },
-                        text = peronas[1],
+                        text = "4",
                         fontWeight = FontWeight.Bold,
                         fontSize = 25.sp,
                     )
@@ -261,14 +265,12 @@ fun InfoReceta () {
         }
     }
 
-
+@Preview
 @Composable
 fun TituloComida() {
 
-        //val (titulo, descripcion) = createRefs()
-
         Text(
-            text = tituloComidaSem[0],
+            text = "Gyozas",
             fontFamily = fontFamily,
             color = Color.Black,
             style = TextStyle(
@@ -277,30 +279,20 @@ fun TituloComida() {
             ),
             modifier = Modifier
                 .padding(top = 10.dp, bottom = 5.dp, start = 20.dp, end = 10.dp)
-
-                /*.constrainAs(titulo) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }*/
         )
 
+    for (i in 0 until descripcionGyozas.size) {
         Text(
-            text = subTituloComidaSem[0],
+            text = descripcionGyozas[i],
             color = Color.Black,
             style = TextStyle(
                 fontSize = 18.sp),
             modifier = Modifier
-                .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 10.dp)
-                /*.constrainAs(descripcion) {
-                    top.linkTo(titulo.top, margin = 50.dp)
-                    start.linkTo(parent.start)
-                    bottom.linkTo(parent.bottom)
-                    end.linkTo(parent.end)
-                }*/
-        )
+                .padding(top = 3.dp, bottom = 2.dp, start = 20.dp, end = 10.dp))
+    }
     }
 
+@Preview
 @Composable
 fun Ingredientes () {
 
@@ -315,16 +307,68 @@ fun Ingredientes () {
         modifier = Modifier
             .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
     )
+    Text(
+        text = ("Para la masa de Gyozas"),
+        fontFamily = fontFamily,
+        color = Color.Black,
+        style = TextStyle(
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+        ),
+        modifier = Modifier
+            .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+    )
 
-    for (i in 0 until ingredientesSem.size) {
+    for (i in 0 until masaGyozas.size) {
         Text(
-            text = ingredientesSem[i],
+            text = masaGyozas[i],
             color = Color.Black,
             style = TextStyle(
                 fontSize = 18.sp),
             modifier = Modifier
                 .padding(top = 3.dp, bottom = 2.dp, start = 20.dp, end = 10.dp))
     }
+    Text(
+        text = ("Para el relleno de gyozas"),
+        fontFamily = fontFamily,
+        color = Color.Black,
+        style = TextStyle(
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+        ),
+        modifier = Modifier
+            .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+    )
+    for (i in 0 until rellenoDeGyozas.size) {
+        Text(
+            text = rellenoDeGyozas[i],
+            color = Color.Black,
+            style = TextStyle(
+                fontSize = 18.sp),
+            modifier = Modifier
+                .padding(top = 3.dp, bottom = 2.dp, start = 20.dp, end = 10.dp))
+    }
+    Text(
+        text = ("Para la salsa de Gyozas"),
+        fontFamily = fontFamily,
+        color = Color.Black,
+        style = TextStyle(
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+        ),
+        modifier = Modifier
+            .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+    )
+    for (i in 0 until salsaGyozas.size) {
+        Text(
+            text = salsaGyozas[i],
+            color = Color.Black,
+            style = TextStyle(
+                fontSize = 18.sp),
+            modifier = Modifier
+                .padding(top = 3.dp, bottom = 2.dp, start = 20.dp, end = 10.dp))
+    }
+
 }
 
 @Composable
@@ -342,26 +386,35 @@ fun Preparacion () {
     )
 
     Text(
-        text = preparacion[0],
+        text = ("Hacer la masa"),
+        fontFamily = fontFamily,
         color = Color.Black,
         style = TextStyle(
-            fontSize = 18.sp),
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+        ),
         modifier = Modifier
-            .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 10.dp)
-        /*.constrainAs(descripcion) {
-            top.linkTo(titulo.top, margin = 50.dp)
-            start.linkTo(parent.start)
-            bottom.linkTo(parent.bottom)
-            end.linkTo(parent.end)
-        }*/
+            .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
     )
+
+    for (i in 0 until preparacionMasa.size) {
+        Text(
+            text = preparacionMasa[i],
+            color = Color.Black,
+            style = TextStyle(
+                fontSize = 18.sp),
+            modifier = Modifier
+                .padding(top = 3.dp, bottom = 2.dp, start = 20.dp, end = 10.dp))
+
+        Image(
+            painter = painterResource(id = imagenesPeparaciaMasa[i]),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+
+        )
+    }
 }
-
-@Composable
-fun Imagenes (){
-
-}
-
 
 
 
