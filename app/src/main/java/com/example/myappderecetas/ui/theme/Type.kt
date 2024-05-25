@@ -17,7 +17,8 @@ val Typography = Typography(
     )
 )
 
-val fontName = GoogleFont("Fredericka the Great")
+val fontName = GoogleFont("IM Fell Great Primer SC")
+val fontName2 = GoogleFont("Poppins")
 
 val provider = GoogleFont.Provider(
     providerAuthority = "com.google.android.gms.fonts",
@@ -28,6 +29,12 @@ val provider = GoogleFont.Provider(
 val fontFamily = FontFamily(
     Font(googleFont = fontName, fontProvider = provider)
 )
+val fontFamily2 = FontFamily(
+    Font(googleFont = fontName2, fontProvider = provider)
+)
+
+
+
 
 
 
