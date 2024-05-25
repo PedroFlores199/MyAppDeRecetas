@@ -122,9 +122,9 @@ fun ParallaxSecToolbar(navController: NavController) {
 }
 
 val descripcionGyozas = listOf("Las gyozas, también conocidas como empanadillas japonesas, son una auténtica delicia y muy fáciles de hacer.", "Con esta receta haremos unas 35 gyozas por menos de 10 euros, ridículo cuando lo comparas a los precios que tienen en los restaurantes (5 gyozas, por 5 euros). Congela todas las gyozas que no vayas a usar, y cuando tengas que hacerte la comida muy rápido, cocínalas exactamente igual que las cocinarías recién formadas, pero añade 2 minutos más dentro de la sartén para que se descongelen completamente. ¡Estarán como recién echas! ")
-val masaGyozas = listOf("310g de harina", "155ml de agua", "Una pizca de sal")
-val rellenoDeGyozas = listOf ("375 g de carne picada de cerdo", "1,50cm de jengible", "1/4 de cucharada (chuchara grande) de vino de arroz o de vino blanco", "1/8 de repollo", "1/2 Diente de ajo", "3 ajetes", "1/2 cucharada de salsa de soja", "3 granos de pimienta blanca", "Pizca de sal", "1/2 cucharadilla de azúcar" )
-val salsaGyozas = listOf("37.5 ml de salsa de soja ", "12,5 ml de vinagre de arroz ", "Sesamo")
+val masaGyozas = listOf("310 g de harina", "155 ml de agua", "Una pizca de sal")
+val rellenoDeGyozas = listOf ("375 g de carne picada de cerdo", "1,50 cm de jengible", "1/4 de cucharada (chuchara grande) de vino de arroz o de vino blanco", "1/8 de repollo", "1/2 de diente de ajo", "3 ajetes", "1/2 cucharada de salsa de soja", "3 granos de pimienta blanca", "1 pizca de sal", "1/2 cucharadilla de azúcar" )
+val salsaGyozas = listOf("37,5 ml de salsa de soja ", "12,5 ml de vinagre de arroz ", "Un poquito de sesamo")
 val preparacionMasa = listOf("En un bol añade la harina de trigo y la sal. ",
     "Llevamos a ebullición el agua y en cuanto empiece a hervir, lo echamos en el bol y mezclamos bien",
     "Transfiere la masa a una superficie y amasa de 7 a 8 minutos, o hasta que sea elástica y lisa",
@@ -214,7 +214,7 @@ fun InfoReceta () {
                             .size(40.dp)
                             .constrainAs(icono) {
                                 top.linkTo(parent.top)
-                                start.linkTo(parent.start, margin = 100.dp)
+                                start.linkTo(parent.start, margin = 150.dp)
                             }
                     )
 
@@ -278,12 +278,12 @@ fun TituloComida() {
                 fontWeight = FontWeight.Bold,
             ),
             modifier = Modifier
-                .padding(top = 10.dp, bottom = 5.dp, start = 20.dp, end = 10.dp)
+                .padding(top = 10.dp, bottom = 10.dp, start = 20.dp, end = 10.dp)
         )
 
     for (i in 0 until descripcionGyozas.size) {
         Text(
-            text = descripcionGyozas[i],
+            text = descripcionGyozas[i] + "\n",
             color = Color.Black,
             style = TextStyle(
                 fontSize = 18.sp),
@@ -305,7 +305,7 @@ fun Ingredientes () {
             fontWeight = FontWeight.Bold,
         ),
         modifier = Modifier
-            .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+            .padding(top = 10.dp, bottom = 10.dp, start = 20.dp, end = 20.dp)
     )
     Text(
         text = ("Para la masa de Gyozas"),
@@ -316,7 +316,7 @@ fun Ingredientes () {
             fontWeight = FontWeight.Bold,
         ),
         modifier = Modifier
-            .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+            .padding(top = 10.dp, bottom = 10.dp, start = 20.dp, end = 20.dp)
     )
 
     for (i in 0 until masaGyozas.size) {
@@ -326,7 +326,7 @@ fun Ingredientes () {
             style = TextStyle(
                 fontSize = 18.sp),
             modifier = Modifier
-                .padding(top = 3.dp, bottom = 2.dp, start = 20.dp, end = 10.dp))
+                .padding(top = 3.dp, bottom = 3.dp, start = 20.dp, end = 10.dp))
     }
     Text(
         text = ("Para el relleno de gyozas"),
@@ -346,7 +346,7 @@ fun Ingredientes () {
             style = TextStyle(
                 fontSize = 18.sp),
             modifier = Modifier
-                .padding(top = 3.dp, bottom = 2.dp, start = 20.dp, end = 10.dp))
+                .padding(top = 4.dp, bottom = 3.dp, start = 20.dp, end = 10.dp))
     }
     Text(
         text = ("Para la salsa de Gyozas"),
@@ -366,7 +366,7 @@ fun Ingredientes () {
             style = TextStyle(
                 fontSize = 18.sp),
             modifier = Modifier
-                .padding(top = 3.dp, bottom = 2.dp, start = 20.dp, end = 10.dp))
+                .padding(top = 3.dp, bottom = 3.dp, start = 20.dp, end = 10.dp))
     }
 
 }
@@ -382,7 +382,7 @@ fun Preparacion () {
             fontWeight = FontWeight.Bold,
         ),
         modifier = Modifier
-            .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+            .padding(top = 10.dp, bottom = 10.dp, start = 20.dp, end = 20.dp)
     )
 
     Text(
@@ -404,13 +404,14 @@ fun Preparacion () {
             style = TextStyle(
                 fontSize = 18.sp),
             modifier = Modifier
-                .padding(top = 3.dp, bottom = 2.dp, start = 20.dp, end = 10.dp))
+                .padding(top = 3.dp, bottom = 10.dp, start = 20.dp, end = 10.dp))
 
         Image(
             painter = painterResource(id = imagenesPeparaciaMasa[i]),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(top = 3.dp, bottom = 10.dp, start = 20.dp, end = 10.dp)
 
         )
     }
