@@ -67,6 +67,7 @@ fun FragmentoSegundario (navController: NavController) {
                 InfoReceta()
                 TituloComida()
                 Ingredientes()
+                Preparacion()
             }
         }
     }
@@ -115,6 +116,23 @@ fun ParallaxSecToolbar(navController: NavController) {
     }
 }
 
+val tituloComidaSem = listOf(
+    "Sushi",
+    "Cocarris"
+)
+val subTituloComidaSem = listOf(
+    "La cocina tradicional japonesa se fundamenta principalmente en el arroz blanco, al igual que muchos países asiáticos vecinos, por la facilidad para cultivarlo en esas zonas y la versatilidad para usarlo como base o como acompañamiento de muchos platos.",
+    "La receta de cocarrois es una delicia originaria de Mallorca y también de Ibiza. Se caracteriza por tener como relleno una mezcla de diversas verduras con condimentos básicos."
+)
+
+val ingredientesSem = listOf("150 gramos de fideos noodles", "2 huevos", "Cebolletas para usar la parte verde", "1 alga nori", "1 litro de caldo de pollo", "6 setas shiitake", "1 pechugas de pollo", "4 dientes de ajo", "80 mililitros de salsa de soja", "2 cucharadas de aceite de oliva", "1 trozo de jengibre" , "30 gramos de mantequilla", "2 cucharaditas de azúcar", "1 cucharadita de sal")
+
+val peronas = listOf("4", "3")
+
+val tiempoCocinado = listOf("40 min", "1 Hora")
+
+val preparacion = listOf("10 min", "10 min")
+
 @Composable
 fun FotoReceta (){
     Spacer(
@@ -136,112 +154,112 @@ fun FotoReceta (){
 
 @Composable
 fun InfoReceta () {
+    Box (modifier = Modifier.padding(20.dp)){
+            Row {
+                ConstraintLayout {
+                    val (tiempo, icono, barra) = createRefs()
 
-    Row(modifier = Modifier.padding(20.dp)) {
-        Row {
-            ConstraintLayout {
-                val (tiempo, icono, barra) = createRefs()
+                    Icon(
+                        painter = painterResource(id = R.drawable.time),
+                        contentDescription = null,
+                        tint = Grey,
+                        modifier = Modifier
+                            .size(40.dp)
+                            .constrainAs(icono) {
+                                top.linkTo(parent.top)
+                                start.linkTo(parent.start)
+                            }
+                    )
 
-                Icon(
-                    painter = painterResource(id = R.drawable.time),
-                    contentDescription = null,
-                    tint = Grey,
-                    modifier = Modifier
-                        .size(40.dp)
-                        .constrainAs(icono) {
-                            top.linkTo(parent.top)
-                            start.linkTo(parent.start)
-                        }
-                )
+                    Box(
+                        modifier = Modifier
+                            .background(Color(color = 0xFF930D0D))
+                            .width(5.dp)
+                            .height(35.dp)
+                            .constrainAs(barra) {
+                                start.linkTo(icono.start, margin = 50.dp)
+                                end.linkTo(tiempo.start, margin = 10.dp)
+                            }
 
-                Box(
-                    modifier = Modifier
-                        .background(Color(color = 0xFF930D0D))
-                        .width(5.dp)
-                        .height(35.dp)
-                        .constrainAs(barra) {
-                            start.linkTo(icono.start, margin = 50.dp)
-                            end.linkTo(tiempo.start, margin = 10.dp)
-                        }
+                    )
+                    Text(
+                        text = tiempoCocinado[1],
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 25.sp,
+                        modifier = Modifier
+                            .constrainAs(tiempo) {
+                                start.linkTo(barra.start)
+                                top.linkTo(barra.top)
+                                bottom.linkTo(barra.bottom)
+                                end.linkTo(parent.end)
 
-                )
-                Text(
-                    modifier = Modifier
-                        .constrainAs(tiempo) {
-                            start.linkTo(barra.start)
-                            top.linkTo(barra.top)
-                            bottom.linkTo(barra.bottom)
-                            end.linkTo(parent.end)
-
-                        },
-                    text = "40 min",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 25.sp,
-                )
+                            }
+                    )
+                }
             }
-        }
-        Row {
-            ConstraintLayout {
-                val (tiempo, icono, barra) = createRefs()
 
-                Icon(
-                    painter = painterResource(id = R.drawable.restaurant20px),
-                    contentDescription = null,
-                    tint = Grey,
-                    modifier = Modifier
-                        .size(40.dp)
-                        .constrainAs(icono) {
-                            top.linkTo(parent.top)
-                            start.linkTo(parent.start)
-                        }
-                )
+            Row(modifier = Modifier.align(Alignment.BottomCenter)) {
+                ConstraintLayout {
+                    val (tiempo, icono, barra) = createRefs()
 
-                Box(
-                    modifier = Modifier
-                        .background(Color(color = 0xFF930D0D))
-                        .width(5.dp)
-                        .height(35.dp)
-                        .constrainAs(barra) {
-                            start.linkTo(icono.start, margin = 50.dp)
-                            end.linkTo(tiempo.start, margin = 10.dp)
-                        }
+                    Icon(
+                        painter = painterResource(id = R.drawable.restaurant20px),
+                        contentDescription = null,
+                        tint = Grey,
+                        modifier = Modifier
+                            .size(40.dp)
+                            .constrainAs(icono) {
+                                top.linkTo(parent.top)
+                                start.linkTo(parent.start, margin = 100.dp)
+                            }
+                    )
 
-                )
-                Text(
-                    modifier = Modifier
-                        .constrainAs(tiempo) {
-                            start.linkTo(barra.start)
-                            top.linkTo(barra.top)
-                            bottom.linkTo(barra.bottom)
-                            end.linkTo(parent.end)
+                    Box(
+                        modifier = Modifier
+                            .background(Color(color = 0xFF930D0D))
+                            .width(5.dp)
+                            .height(35.dp)
+                            .constrainAs(barra) {
+                                start.linkTo(icono.start, margin = 50.dp)
+                                end.linkTo(tiempo.start, margin = 10.dp)
+                            }
 
-                        },
-                    text = "4",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 25.sp,
-                )
+                    )
+                    Text(
+                        modifier = Modifier
+                            .constrainAs(tiempo) {
+                                start.linkTo(barra.start)
+                                top.linkTo(barra.top)
+                                bottom.linkTo(barra.bottom)
+                                end.linkTo(parent.end)
+
+                            },
+                        text = peronas[1],
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 25.sp,
+                    )
+                }
             }
-        }
-        Row {
-            Icon(
-                painter = painterResource(id = R.drawable.share20px),
-                contentDescription = null,
-                tint = Grey,
-                modifier = Modifier
-                    .size(40.dp)
-            )
+
+            Row {
+                ConstraintLayout {
+                    val (compartir) = createRefs()
+                    Icon(
+                        painter = painterResource(id = R.drawable.share20px),
+                        contentDescription = null,
+                        tint = Grey,
+                        modifier = Modifier
+                            .size(40.dp)
+                            .constrainAs(compartir) {
+                                top.linkTo(parent.top)
+                                start.linkTo(parent.start, 300.dp)
+                                end.linkTo(parent.end)
+                            }
+                    )
+                }
+            }
         }
     }
-}
-
-val tituloComidaSem = listOf(
-    "Sushi",
-    "Cocarris"
-)
-val subTituloComidaSem = listOf(
-    "La cocina tradicional japonesa se fundamenta principalmente en el arroz blanco, al igual que muchos países asiáticos vecinos, por la facilidad para cultivarlo en esas zonas y la versatilidad para usarlo como base o como acompañamiento de muchos platos.",
-    "La receta de cocarrois es una delicia originaria de Mallorca y también de Ibiza. Se caracteriza por tener como relleno una mezcla de diversas verduras con condimentos básicos."
-)
 
 
 @Composable
@@ -283,8 +301,6 @@ fun TituloComida() {
         )
     }
 
-val ingredientesSem = listOf("150 gramos de fideos noodles", "2 huevos", "Cebolletas para usar la parte verde", "1 alga nori", "1 litro de caldo de pollo", "6 setas shiitake", "1 pechugas de pollo", "4 dientes de ajo", "80 mililitros de salsa de soja", "2 cucharadas de aceite de oliva", "1 trozo de jengibre" , "30 gramos de mantequilla", "2 cucharaditas de azúcar", "1 cucharadita de sal")
-
 @Composable
 fun Ingredientes () {
 
@@ -307,9 +323,46 @@ fun Ingredientes () {
             style = TextStyle(
                 fontSize = 18.sp),
             modifier = Modifier
-                .padding(top = 2.dp, bottom = 2.dp, start = 20.dp, end = 10.dp))
+                .padding(top = 3.dp, bottom = 2.dp, start = 20.dp, end = 10.dp))
     }
 }
+
+@Composable
+fun Preparacion () {
+    Text(
+        text = ("Preparacion"),
+        fontFamily = fontFamily,
+        color = Color.Black,
+        style = TextStyle(
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+        ),
+        modifier = Modifier
+            .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+    )
+
+    Text(
+        text = preparacion[0],
+        color = Color.Black,
+        style = TextStyle(
+            fontSize = 18.sp),
+        modifier = Modifier
+            .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 10.dp)
+        /*.constrainAs(descripcion) {
+            top.linkTo(titulo.top, margin = 50.dp)
+            start.linkTo(parent.start)
+            bottom.linkTo(parent.bottom)
+            end.linkTo(parent.end)
+        }*/
+    )
+}
+
+@Composable
+fun Imagenes (){
+
+}
+
+
 
 
 
