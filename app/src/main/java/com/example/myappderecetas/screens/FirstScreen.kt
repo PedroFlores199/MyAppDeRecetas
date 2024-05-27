@@ -6,6 +6,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,12 +23,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -51,6 +54,7 @@ import com.example.myappderecetas.R
 import com.example.myappderecetas.navegation.AppScreens
 import com.example.myappderecetas.ui.theme.Grey
 import androidx.compose.ui.layout.ContentScale
+import kotlinx.coroutines.launch
 
 
 @Preview
@@ -87,7 +91,7 @@ fun FragmentoProncipal (navController: NavController ) {
             ParallaxToolbar(navController)
             PlatoDelDia(navController)
             RecetasDeLaSemana()
-            SwipeablePages()
+            SwipeablePages(navController)
         }
     }
     }
@@ -313,7 +317,6 @@ data class Ingrediente(
 val recipeList = listOf(Ingrediente(R.drawable.ramen_seg_pan, "Ramen", listOf("150 gramos de fideos noodles", "2 huevos", "Cebolletas para usar la parte verde", "1 alga nori", "1 litro de caldo de pollo", "6 setas shiitake", "1 pechugas de pollo", "4 dientes de ajo", "80 mililitros de salsa de soja", "2 cucharadas de aceite de oliva", "1 trozo de jengibre" , "30 gramos de mantequilla", "2 cucharaditas de azúcar", "1 cucharadita de sal"))
     , listOf(Ingrediente(R.drawable.ramen_seg_pan, "Cocarrois", listOf("250 gramos de manteca", "Un vaso de aceite de oliva", "250 mililitros de agua", "900 gramos de harina", "sal", "1 coliflor", "20 gramos de acelgas", "Aceite de oliva", "sal", "Pimienta", "Pimenton"))))
 */
-@Preview
 @Composable
 fun RecetasDeLaSemana () {
     Spacer(
@@ -359,20 +362,19 @@ fun RecetasDeLaSemana () {
 
 
 @OptIn(ExperimentalFoundationApi::class)
-@Preview
 @Composable
-fun SwipeablePages () {
+fun SwipeablePages (navController: NavController) {
 
     val comida = listOf(
-        R.drawable.sushi,
+        R.drawable.katsudon_titulo,
         R.drawable.cocarrois
     )
     val tituloComidaSem = listOf(
-        "Sushi",
+        "Katsudon ",
         "Cocarris"
     )
     val subTituloComidaSem = listOf(
-        "La cocina tradicional japonesa se fundamenta principalmente en el arroz blanco, al igual que muchos países asiáticos vecinos, por la facilidad para cultivarlo en esas zonas y la versatilidad para usarlo como base o como acompañamiento de muchos platos.",
+        "El katsudon es un plato japonés popular que consiste en tonkatsu (cerdo empanizado y frito) y huevos cocidos en un caldo dulce y salado servido sobre arroz.",
         "La receta de cocarrois es una delicia originaria de Mallorca y también de Ibiza. Se caracteriza por tener como relleno una mezcla de diversas verduras con condimentos básicos."
     )
 
@@ -385,8 +387,6 @@ fun SwipeablePages () {
             .fillMaxSize()
             .padding(10.dp)
     ) {
-
-
         HorizontalPager(state = pagerState) { index ->
 
             Box(
@@ -396,7 +396,7 @@ fun SwipeablePages () {
                     .clip(RoundedCornerShape(40.dp))
                     .background(Color(color = 0xFF5C0A0A))
                     .align(Alignment.BottomCenter)
-                    .clickable {  }
+                    .clickable { navController.navigate(route = AppScreens.Katsudon.route) }
             ) {
                 ConstraintLayout {
                     val (titulo, imagen, subTitulo) = createRefs()
@@ -406,12 +406,12 @@ fun SwipeablePages () {
                         contentScale = ContentScale.Inside,
                         modifier = Modifier
                             .clip(RoundedCornerShape(40.dp))
-                            .clickable { }
                             .constrainAs(imagen) {
                                 top.linkTo(parent.top)
                                 start.linkTo(parent.start)
                                 end.linkTo(parent.end)
                             }
+                            .clickable { navController.navigate(route = AppScreens.Katsudon.route) }
                     )
                     Text(
                         text = tituloComidaSem[index],
@@ -434,19 +434,52 @@ fun SwipeablePages () {
                             fontWeight = FontWeight.Bold
                         ),
 
-                        modifier = Modifier.padding(bottom = 20.dp, start = 20.dp, end = 20.dp)
+                        modifier = Modifier
+                            .padding(bottom = 20.dp, start = 20.dp, end = 20.dp)
                             .constrainAs(subTitulo) {
-                            top.linkTo(titulo.bottom, margin = 20.dp)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                        }
+                                top.linkTo(titulo.bottom, margin = 20.dp)
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
+                            }
                     )
 
                 }
             }
         }
     }
-}
+
+            Row(
+                Modifier
+                    .height(100.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                repeat(comida.size) {
+
+                    //Si la pagina actual coincide con el numero de iteracion del repeat se vera von un color gris oscuro
+                    val color =
+                        if (pagerState.currentPage == it) Color.DarkGray else Color.LightGray
+
+                    val scope = rememberCoroutineScope()
+                    Box(
+                        modifier = Modifier
+                            .padding(2.dp)
+                            .clip(CircleShape)
+                            .size(20.dp)
+                            .background(color)
+                            .clickable {
+                                scope.launch {
+                                    pagerState.animateScrollToPage(it)
+                                }
+                            }
+
+                    )
+                }
+            }
+        }
+
+
+
 
 
 

@@ -1,11 +1,11 @@
 package com.example.myappderecetas.navegation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCompositionContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myappderecetas.screens.FirstScreen
+import com.example.myappderecetas.screens.Katsudon
 import com.example.myappderecetas.screens.SecondScreen
 
 
@@ -21,6 +21,9 @@ fun AppNavigation() {
         }
         composable(route = AppScreens.SecondScreen.route) {
             SecondScreen(navController)
+        }
+        composable(route = AppScreens.Katsudon.route) {
+            Katsudon(navController)
         }
     }
 }
