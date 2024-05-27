@@ -64,9 +64,9 @@ fun FragmentoSegundario (navController: NavController) {
         LazyColumn {
             item {
                 ParallaxSecToolbar(navController)
-                FotoReceta()
+                FotoReceta(gyozasImagen)
                 InfoReceta()
-                TituloComida()
+                TituloComida(gyozasTitulo, descripcionGyozas)
                 Ingredientes()
                 Preparacion()
             }
@@ -143,10 +143,13 @@ val preparacionGyozas = listOf("Quítale el corazón al repollo y córtalo en tr
         "Sirve con aceite de chiles y la salsa de gyozas")
 val imagenesPeparacionMasa = listOf(R.drawable.sushi, R.drawable.cocarrois, R.drawable.sushi, R.drawable.cocarrois, R.drawable.sushi, R.drawable.cocarrois, R.drawable.sushi, R.drawable.cocarrois,R.drawable.sushi, R.drawable.cocarrois)
 val imagenesPeparacionGyozas= listOf(R.drawable.sushi, R.drawable.cocarrois, R.drawable.sushi, R.drawable.sushi, R.drawable.cocarrois, R.drawable.sushi, R.drawable.cocarrois, R.drawable.sushi, R.drawable.cocarrois, R.drawable.sushi, R.drawable.cocarrois, R.drawable.cocarrois, R.drawable.sushi, R.drawable.cocarrois)
+val gyozasImagen = R.drawable.gyozasresultado
+val gyozasTitulo = "Gyozas"
+
 
 
 @Composable
-fun FotoReceta (){
+fun FotoReceta (Inav: Int = gyozasImagen){
     Spacer(
         modifier = Modifier
             .height(20.dp)
@@ -154,7 +157,7 @@ fun FotoReceta (){
 
     Box() {
         Image(
-            painter = painterResource(id = R.drawable.gyozasresultado),
+            painter = painterResource(id = Inav),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
@@ -276,10 +279,10 @@ fun InfoReceta () {
 
 @Preview
 @Composable
-fun TituloComida() {
+fun TituloComida(gyozasT: String = gyozasTitulo, gyozasD: List<String> = descripcionGyozas) {
 
         Text(
-            text = "Gyozas",
+            text = gyozasTitulo,
             fontFamily = fontFamily,
             color = Color.Black,
             style = TextStyle(
