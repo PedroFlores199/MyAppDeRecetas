@@ -67,7 +67,7 @@ fun FragmentoSegundario (navController: NavController) {
                 FotoReceta(gyozasImagen)
                 InfoReceta()
                 TituloComida(gyozasTitulo, descripcionGyozas)
-                Ingredientes()
+                IngredientesGyozas()
                 Preparacion()
             }
         }
@@ -132,7 +132,7 @@ val preparacionGyozas = listOf("Quítale el corazón al repollo y córtalo en tr
         "Pica los ajetes, pela el jengibre y los ajos",
         "Pon el repollo debajo de agua fría para parar la cocción",
         "Pícalo muy fino y después estrújalo para extraer toda el agua posible",
-        "En un bol, añade la carne picada, el vino de arroz, el azúcar, la salsa de soja, la sal, los ajetes, el jengibre rallado, el ajo rallado, el repollo, el glutamato monosódico y la pimienta blanca" +
+        "En un bol, añade la carne picada, el vino de arroz, el azúcar, la salsa de soja, la sal, los ajetes, el jengibre rallado, el ajo rallado, el repollo, el glutamato monosódico y la pimienta blanca",
         "Mezcla con la mano, siempre girando en la misma dirección, hasta que se adhiera a las paredes y sea pastoso",
         "Prueba y corrige sazonado. Resérvalo en la nevera cubierto con papel film",
         "Coge la masa y pon una cucharadilla de relleno en el centro",
@@ -282,7 +282,7 @@ fun InfoReceta () {
 fun TituloComida(gyozasT: String = gyozasTitulo, gyozasD: List<String> = descripcionGyozas) {
 
         Text(
-            text = gyozasTitulo,
+            text = gyozasT,
             fontFamily = fontFamily,
             color = Color.Black,
             style = TextStyle(
@@ -293,9 +293,9 @@ fun TituloComida(gyozasT: String = gyozasTitulo, gyozasD: List<String> = descrip
                 .padding(top = 10.dp, bottom = 10.dp, start = 20.dp, end = 10.dp)
         )
 
-    for (i in 0 until descripcionGyozas.size) {
+    for (i in 0 until gyozasD.size) {
         Text(
-            text = descripcionGyozas[i] + "\n",
+            text = gyozasD[i] + "\n",
             fontFamily = fontFamily2,
             color = Color.Black,
             style = TextStyle(
@@ -303,11 +303,10 @@ fun TituloComida(gyozasT: String = gyozasTitulo, gyozasD: List<String> = descrip
             modifier = Modifier
                 .padding(top = 3.dp, bottom = 2.dp, start = 20.dp, end = 10.dp))
     }
-    }
+}
 
-@Preview
 @Composable
-fun Ingredientes () {
+fun IngredientesGyozas () {
 
     Text(
         text = ("Ingredientes"),
@@ -316,32 +315,39 @@ fun Ingredientes () {
         style = TextStyle(
             fontSize = 50.sp,
             fontWeight = FontWeight.Bold,
-            ),
+        ),
         modifier = Modifier
             .padding(top = 10.dp, bottom = 10.dp, start = 20.dp, end = 20.dp)
     )
-    Text(
-        text = ("Para la masa de Gyozas"),
-        fontFamily = fontFamily,
-        color = Color.Black,
-        style = TextStyle(
-            fontSize = 28.sp,
-        ),
-        modifier = Modifier
-            .padding(top = 10.dp, bottom = 10.dp, start = 20.dp, end = 20.dp),
-            fontWeight = FontWeight.Bold
-    )
 
-    for (i in 0 until masaGyozas.size) {
+
         Text(
-            text = masaGyozas[i],
-            fontFamily = fontFamily2,
+            text = ("Para la masa de Gyozas"),
+                    fontFamily = fontFamily,
             color = Color.Black,
             style = TextStyle(
-                fontSize = 18.sp),
+                fontSize = 28.sp,
+            ),
             modifier = Modifier
-                .padding(top = 3.dp, bottom = 3.dp, start = 20.dp, end = 10.dp))
-    }
+                .padding(top = 10.dp, bottom = 10.dp, start = 20.dp, end = 20.dp),
+            fontWeight = FontWeight.Bold
+        )
+
+
+        for (i in 0 until masaGyozas.size) {
+            Text(
+                text = masaGyozas[i],
+                fontFamily = fontFamily2,
+                color = Color.Black,
+                style = TextStyle(
+                    fontSize = 18.sp
+                ),
+                modifier = Modifier
+                    .padding(top = 3.dp, bottom = 3.dp, start = 20.dp, end = 10.dp)
+            )
+        }
+
+
     Text(
         text = ("Para el relleno de gyozas"),
         fontFamily = fontFamily,
@@ -351,8 +357,9 @@ fun Ingredientes () {
         ),
         modifier = Modifier
             .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp),
-            fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold
     )
+
     for (i in 0 until rellenoDeGyozas.size) {
         Text(
             text = rellenoDeGyozas[i],
@@ -372,7 +379,7 @@ fun Ingredientes () {
         ),
         modifier = Modifier
             .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp),
-            fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold
     )
     for (i in 0 until salsaGyozas.size) {
         Text(
@@ -384,7 +391,6 @@ fun Ingredientes () {
             modifier = Modifier
                 .padding(top = 3.dp, bottom = 3.dp, start = 20.dp, end = 10.dp))
     }
-
 }
 
 @Composable

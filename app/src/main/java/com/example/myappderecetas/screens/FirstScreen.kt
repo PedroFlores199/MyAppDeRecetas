@@ -1,6 +1,7 @@
 package com.example.myappderecetas.screens
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -54,6 +56,7 @@ import com.example.myappderecetas.R
 import com.example.myappderecetas.navegation.AppScreens
 import com.example.myappderecetas.ui.theme.Grey
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import kotlinx.coroutines.launch
 
 
@@ -391,28 +394,18 @@ fun SwipeablePages (navController: NavController) {
 
             Box(
                 modifier = Modifier
-                    .fillMaxWidth() // Use fillMaxWidth instead of fillMaxSize to allow height adjustment
-                    .height(450.dp)
-                    .clip(RoundedCornerShape(40.dp))
-                    .background(Color(color = 0xFF5C0A0A))
-                    .align(Alignment.BottomCenter)
-                    .clickable { navController.navigate(route = AppScreens.Katsudon.route) }
+                    .fillMaxWidth()
             ) {
-                ConstraintLayout {
-                    val (titulo, imagen, subTitulo) = createRefs()
-                    Image(
-                        painter = painterResource(id = comida[index]),
-                        contentDescription = null,
-                        contentScale = ContentScale.Inside,
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(40.dp))
-                            .constrainAs(imagen) {
-                                top.linkTo(parent.top)
-                                start.linkTo(parent.start)
-                                end.linkTo(parent.end)
-                            }
-                            .clickable { navController.navigate(route = AppScreens.Katsudon.route) }
-                    )
+                Image(
+                    painter = painterResource(id = comida[index]),
+                    contentDescription = null,
+                    contentScale = ContentScale.Inside,
+                    modifier = Modifier
+                        .clickable { navController.navigate(route = AppScreens.Katsudon.route) }
+                        .align(Alignment.TopCenter)
+
+                )
+
                     Text(
                         text = tituloComidaSem[index],
                         color = Color.White,
@@ -420,11 +413,9 @@ fun SwipeablePages (navController: NavController) {
                             fontSize = 28.sp,
                             fontWeight = FontWeight.Bold
                         ),
-                        modifier = Modifier.constrainAs(titulo) {
-                            top.linkTo(imagen.bottom, margin = 20.dp)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                        }
+                        modifier = Modifier
+                            .padding(top = 300.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+
                     )
                     Text(
                         text = subTituloComidaSem[index],
@@ -432,52 +423,48 @@ fun SwipeablePages (navController: NavController) {
                         style = TextStyle(
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Bold
-                        ),
-
-                        modifier = Modifier
-                            .padding(bottom = 20.dp, start = 20.dp, end = 20.dp)
-                            .constrainAs(subTitulo) {
-                                top.linkTo(titulo.bottom, margin = 20.dp)
-                                start.linkTo(parent.start)
-                                end.linkTo(parent.end)
-                            }
+                        ), modifier = Modifier
+                            .padding(top = 350.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
                     )
 
-                }
             }
         }
     }
 
-            Row(
-                Modifier
-                    .height(100.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                repeat(comida.size) {
+    Row(
+        Modifier
+            .height(100.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        repeat(comida.size) {
 
-                    //Si la pagina actual coincide con el numero de iteracion del repeat se vera von un color gris oscuro
-                    val color =
-                        if (pagerState.currentPage == it) Color.DarkGray else Color.LightGray
+            //Si la pagina actual coincide con el numero de iteracion del repeat se vera von un color gris oscuro
+            val color =
+                if (pagerState.currentPage == it) Color.DarkGray else Color.LightGray
 
-                    val scope = rememberCoroutineScope()
-                    Box(
-                        modifier = Modifier
-                            .padding(2.dp)
-                            .clip(CircleShape)
-                            .size(20.dp)
-                            .background(color)
-                            .clickable {
-                                scope.launch {
-                                    pagerState.animateScrollToPage(it)
-                                }
-                            }
-
-                    )
-                }
-            }
+            val scope = rememberCoroutineScope()
+            Box(
+                modifier = Modifier
+                    .padding(2.dp)
+                    .clip(CircleShape)
+                    .size(20.dp)
+                    .background(color)
+                    .clickable {
+                        scope.launch {
+                            pagerState.animateScrollToPage(it)
+                        }
+                    }
+            )
         }
+    }
+}
 
+@Composable
+private fun configuration(): Configuration {
+    val configuracion = LocalConfiguration.current
+    return configuracion
+}
 
 
 
