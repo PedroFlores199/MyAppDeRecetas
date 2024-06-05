@@ -298,6 +298,7 @@ fun PlatoDelDia (navController: NavController) {
                 }
             }
             }
+        
             Image(
                 painter = painterResource(id = R.drawable.ramen_inicio),
                 contentDescription = null,

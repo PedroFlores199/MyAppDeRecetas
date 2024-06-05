@@ -64,7 +64,7 @@ fun FragmentoKatsudon (navController: NavController) {
     ) {
         LazyColumn {
             item {
-                ParallaxSecToolbar(navController)
+                //ParallaxSecToolbar(navController)
                 FotoReceta(katsudon)
                 TituloComida(katsudonTitulo, descripcionKatsudon)
                 IngredientesKatsudon()

@@ -17,12 +17,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -34,6 +36,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.myappderecetas.R
+import com.example.myappderecetas.navegation.AppScreens
 import com.example.myappderecetas.ui.theme.Grey
 import com.example.myappderecetas.ui.theme.fontFamily
 import com.example.myappderecetas.ui.theme.fontFamily2
@@ -63,7 +66,7 @@ fun FragmentoSegundario (navController: NavController) {
     ) {
         LazyColumn {
             item {
-                ParallaxSecToolbar(navController)
+                //ParallaxSecToolbar(navController)
                 FotoReceta(gyozasImagen)
                 InfoReceta()
                 TituloComida(gyozasTitulo, descripcionGyozas)
@@ -74,6 +77,7 @@ fun FragmentoSegundario (navController: NavController) {
     }
 }
 
+/*
 @Composable
 fun ParallaxSecToolbar(navController: NavController) {
 
@@ -114,7 +118,7 @@ fun ParallaxSecToolbar(navController: NavController) {
         )
     }
 }
-
+*/
 val descripcionGyozas = listOf("Las gyozas, también conocidas como empanadillas japonesas, son una auténtica delicia y muy fáciles de hacer.", "Con esta receta haremos unas 35 gyozas por menos de 10 euros, ridículo cuando lo comparas a los precios que tienen en los restaurantes (5 gyozas, por 5 euros). Congela todas las gyozas que no vayas a usar, y cuando tengas que hacerte la comida muy rápido, cocínalas exactamente igual que las cocinarías recién formadas, pero añade 2 minutos más dentro de la sartén para que se descongelen completamente. ¡Estarán como recién echas! ")
 val masaGyozas = listOf("310 g de harina", "155 ml de agua", "Una pizca de sal")
 val rellenoDeGyozas = listOf ("375 g de carne picada de cerdo", "1,50 cm de jengible", "1/4 de cucharada (chuchara grande) de vino de arroz o de vino blanco", "1/8 de repollo", "1/2 de diente de ajo", "3 ajetes", "1/2 cucharada de salsa de soja", "3 granos de pimienta blanca", "1 pizca de sal", "1/2 cucharadilla de azúcar" )
@@ -150,10 +154,6 @@ val gyozasTitulo = "Gyozas"
 
 @Composable
 fun FotoReceta (Inav: Int = gyozasImagen){
-    Spacer(
-        modifier = Modifier
-            .height(20.dp)
-    )
 
     Box() {
         Image(
@@ -163,6 +163,7 @@ fun FotoReceta (Inav: Int = gyozasImagen){
                 .fillMaxWidth()
 
         )
+
     }
 }
 
