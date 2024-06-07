@@ -34,6 +34,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.myappderecetas.R
+import com.example.myappderecetas.data.Plato
+import com.example.myappderecetas.data.Recetas
 import com.example.myappderecetas.ui.theme.Grey
 import com.example.myappderecetas.ui.theme.fontFamily
 import com.example.myappderecetas.ui.theme.fontFamily2
@@ -67,8 +69,8 @@ fun FragmentoKatsudon (navController: NavController) {
                 //ParallaxSecToolbar(navController)
                 FotoReceta(katsudon)
                 TituloComida(katsudonTitulo, descripcionKatsudon)
-                IngredientesKatsudon()
-                PreparacionKatsudon ()
+                Ingredientes(1)
+                Preparacion (1)
             }
         }
     }
@@ -100,9 +102,11 @@ val imagenesPeparacionKatsudon= listOf(R.drawable.paso1_katsudon, R.drawable.pas
 val katsudon = R.drawable.katsudon_titulo
 val katsudonTitulo = "Katsudon"
 
+/*
 
 @Composable
-fun IngredientesKatsudon () {
+fun IngredientesKatsudon (platoId: Int = 1) {
+    val plato = Recetas.RecetasList.find { it.id == platoId }
 
     Text(
         text = ("Ingredientes"),
@@ -116,19 +120,22 @@ fun IngredientesKatsudon () {
             .padding(top = 10.dp, bottom = 10.dp, start = 20.dp, end = 20.dp)
     )
 
-    for (i in 0 until ingredientesKatsudon.size) {
-        Text(
-            text = ingredientesKatsudon[i],
-            fontFamily = fontFamily2,
-            color = Color.Black,
-            style = TextStyle(
-                fontSize = 18.sp
-            ),
-            modifier = Modifier
-                .padding(top = 3.dp, bottom = 3.dp, start = 20.dp, end = 10.dp)
-        )
+    if (plato != null) {
+        for (ingrediente in plato.ingredientes) {
+            Text(
+                text = ingrediente,
+                fontFamily = fontFamily2,
+                color = Color.Black,
+                style = TextStyle(
+                    fontSize = 18.sp
+                ),
+                modifier = Modifier
+                    .padding(top = 3.dp, bottom = 3.dp, start = 20.dp, end = 10.dp)
+            )
+        }
     }
 }
+
 
 @Composable
 fun PreparacionKatsudon () {
@@ -150,27 +157,27 @@ fun PreparacionKatsudon () {
             for (i in 0 until preparacionKatsudon.size) {
                 Column(
                     modifier = Modifier
-                        .fillMaxSize() // Fills the entire parent container
-                        .padding(horizontal = 20.dp, vertical = 10.dp) // Consistent padding
+                        .fillMaxSize()
+                        .padding(horizontal = 20.dp, vertical = 10.dp)
                 ) {
-                    Row( // Arrange text and image horizontally
+                    Row(
                         modifier = Modifier.fillMaxWidth(),
                     ) {
                         Image(
                             painter = painterResource(id = imagenesPeparacionKatsudon[i]),
                             contentDescription = null,
                             modifier = Modifier
-                                .weight(1f) // Occupies half the available width
-                                .padding(top = 3.dp, bottom = 50.dp) // Consistent padding
+                                .weight(1f)
+                                .padding(top = 3.dp, bottom = 50.dp)
                         )
-                        Spacer(modifier = Modifier.weight(0.1f)) // Adds a small space between elements
+                        Spacer(modifier = Modifier.weight(0.1f))
                         Text(
                             text = preparacionKatsudon[i],
                             fontFamily = fontFamily2,
                             color = Color.Black,
                             style = TextStyle(fontSize = 20.sp),
                             modifier = Modifier
-                                .weight(1f) // Occupies half the available width
+                                .weight(1f)
                                 .padding(top = 3.dp, bottom = 10.dp)
                         )
                     }
@@ -201,3 +208,4 @@ fun PreparacionKatsudon () {
         }
     }
 }
+*/

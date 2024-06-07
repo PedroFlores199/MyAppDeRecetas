@@ -32,11 +32,11 @@
         </DialogSelection>
       </SelectionState>
       <SelectionState runConfigName="MyPreviewMain">
-        <option name="selectionMode" value="DIALOG" />
-        <DropdownSelection timestamp="2024-05-22T14:04:32.255988400Z">
+        <option name="selectionMode" value="DROPDOWN" />
+        <DropdownSelection timestamp="2024-06-07T12:30:53.223910800Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Peanf\.android\avd\Pixel_Tablet_API_34.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=87a59aa3" />
             </handle>
           </Target>
         </DropdownSelection>
