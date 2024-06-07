@@ -68,7 +68,7 @@ fun FragmentoKatsudon (navController: NavController) {
             item {
                 //ParallaxSecToolbar(navController)
                 FotoReceta(katsudon)
-                TituloComida(katsudonTitulo, descripcionKatsudon)
+                TituloComida(1)
                 Ingredientes(1)
                 Preparacion (1)
             }

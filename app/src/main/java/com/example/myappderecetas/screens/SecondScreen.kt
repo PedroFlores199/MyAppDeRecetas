@@ -69,7 +69,7 @@ fun FragmentoSegundario (navController: NavController) {
                 //ParallaxSecToolbar(navController)
                 FotoReceta(gyozasImagen)
                 InfoReceta()
-                TituloComida(gyozasTitulo, descripcionGyozas)
+                TituloComida(1)
                 IngredientesGyozas()
                 Preparacion()
             }
@@ -151,7 +151,7 @@ val gyozasImagen = R.drawable.gyozasresultado
 val gyozasTitulo = "Gyozas"
 
 
-
+/*
 @Composable
 fun FotoReceta (Inav: Int = gyozasImagen){
 
@@ -166,7 +166,7 @@ fun FotoReceta (Inav: Int = gyozasImagen){
 
     }
 }
-
+*/
 
 
 @Composable
@@ -277,7 +277,7 @@ fun InfoReceta () {
             }
         }
     }
-
+/*
 @Preview
 @Composable
 fun TituloComida(gyozasT: String = gyozasTitulo, gyozasD: List<String> = descripcionGyozas) {
@@ -305,7 +305,7 @@ fun TituloComida(gyozasT: String = gyozasTitulo, gyozasD: List<String> = descrip
                 .padding(top = 3.dp, bottom = 2.dp, start = 20.dp, end = 10.dp))
     }
 }
-
+*/
 @Composable
 fun IngredientesGyozas () {
 

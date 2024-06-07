@@ -2,6 +2,7 @@ package com.example.myappderecetas.screens
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +17,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myappderecetas.data.Recetas
@@ -129,5 +131,53 @@ fun Preparacion (platoId: Int) {
     }
 }
 
+@Composable
+fun TituloComida(platoId: Int) {
+    val plato = Recetas.RecetasList.find { it.id == platoId }
+    plato?.let { recipe ->
+
+        Text(
+            text = recipe.nombre,
+            fontFamily = fontFamily,
+            color = Color.Black,
+            style = TextStyle(
+                fontSize = 50.sp,
+                fontWeight = FontWeight.Bold,
+            ),
+            modifier = Modifier
+                .padding(top = 10.dp, bottom = 10.dp, start = 20.dp, end = 10.dp)
+        )
+
+
+        recipe.descripcion.forEach { descripcion ->
+                Text(
+                    text = descripcion + "\n",
+                    fontFamily = fontFamily2,
+                    color = Color.Black,
+                    style = TextStyle(
+                        fontSize = 18.sp
+                    ),
+                    modifier = Modifier
+                        .padding(top = 3.dp, bottom = 2.dp, start = 20.dp, end = 10.dp)
+                )
+            }
+        }
+    }
+
+
+@Composable
+fun FotoReceta (Inav: Int = gyozasImagen){
+
+    Box() {
+        Image(
+            painter = painterResource(id = Inav),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+
+        )
+
+    }
+}
 
 
