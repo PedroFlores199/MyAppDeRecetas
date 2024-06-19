@@ -11,5 +11,7 @@ data class Plato (
     val pasosPreparacion: List<String>,
     val imagenesPreparacion: List<Int>,
     val tiempo: String,
-    val personas: Int
+    val personas: Int,
+    val etapasIngredientes: List<String>,
+    val etapasPreparacion: List<String>
 )

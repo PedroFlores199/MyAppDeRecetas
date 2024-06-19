@@ -298,9 +298,9 @@ fun PlatoDelDia (navController: NavController) {
                 }
             }
             }
-        
+
             Image(
-                painter = painterResource(id = R.drawable.ramen_inicio),
+                painter = painterResource(id = R.drawable.gyozas),
                 contentDescription = null,
                 modifier = Modifier
                     .size(150.dp)
@@ -371,7 +371,7 @@ fun SwipeablePages (navController: NavController) {
 
     val comida = listOf(
         R.drawable.katsudon_titulo,
-        R.drawable.cocarrois
+        R.drawable.tartajp_titulo
     )
     val tituloComidaSem = listOf(
         "Katsudon ",
@@ -393,9 +393,10 @@ fun SwipeablePages (navController: NavController) {
     ) {
         HorizontalPager(state = pagerState) { index ->
 
-            Box(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .background(Color(color = 0xFF930D0D))
             ) {
                 Image(
                     painter = painterResource(id = comida[index]),
@@ -403,10 +404,14 @@ fun SwipeablePages (navController: NavController) {
                     contentScale = ContentScale.Inside,
                     modifier = Modifier
                         .clickable { navController.navigate(route = AppScreens.Katsudon.route) }
-                        .align(Alignment.TopCenter)
 
                 )
-
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp)
+                        .background(Color(color = 0xFF930D0D))
+                ) {
                     Text(
                         text = tituloComidaSem[index],
                         color = Color.White,
@@ -415,7 +420,7 @@ fun SwipeablePages (navController: NavController) {
                             fontWeight = FontWeight.Bold
                         ),
                         modifier = Modifier
-                            .padding(top = 300.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+                            .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
 
                     )
                     Text(
@@ -425,9 +430,10 @@ fun SwipeablePages (navController: NavController) {
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Bold
                         ), modifier = Modifier
-                            .padding(top = 350.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+                            .padding(top = 50.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
                     )
 
+                }
             }
         }
     }

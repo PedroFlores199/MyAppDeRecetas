@@ -67,10 +67,10 @@ fun FragmentoSegundario (navController: NavController) {
         LazyColumn {
             item {
                 //ParallaxSecToolbar(navController)
-                FotoReceta(gyozasImagen)
-                InfoReceta()
-                TituloComida(1)
-                IngredientesGyozas()
+                FotoReceta(0)
+                InfoReceta(0)
+                TituloComida(0)
+                IngredientesGyozas(0)
                 Preparacion()
             }
         }
@@ -167,7 +167,7 @@ fun FotoReceta (Inav: Int = gyozasImagen){
     }
 }
 */
-
+/*
 
 @Composable
 fun InfoReceta () {
@@ -277,6 +277,8 @@ fun InfoReceta () {
             }
         }
     }
+
+ */
 /*
 @Preview
 @Composable
@@ -306,6 +308,7 @@ fun TituloComida(gyozasT: String = gyozasTitulo, gyozasD: List<String> = descrip
     }
 }
 */
+/*
 @Composable
 fun IngredientesGyozas () {
 
@@ -393,7 +396,7 @@ fun IngredientesGyozas () {
                 .padding(top = 3.dp, bottom = 3.dp, start = 20.dp, end = 10.dp))
     }
 }
-
+*/
 @Composable
 fun Preparacion () {
     Text(
@@ -439,6 +442,7 @@ fun Preparacion () {
 
         )
     }
+
     Text(
         text = ("Peparacion de las Gyozas"),
         fontFamily = fontFamily,
