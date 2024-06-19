@@ -2,18 +2,15 @@ package com.example.myappderecetas.screens
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -371,7 +368,7 @@ fun SwipeablePages (navController: NavController) {
 
     val comida = listOf(
         R.drawable.katsudon_titulo,
-        R.drawable.tartajp_titulo
+        R.drawable.Pancakejp_titulo
     )
     val tituloComidaSem = listOf(
         "Katsudon ",
