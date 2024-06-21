@@ -368,7 +368,7 @@ fun SwipeablePages (navController: NavController) {
 
     val comida = listOf(
         R.drawable.katsudon_titulo,
-        R.drawable.Pancakejp_titulo
+        R.drawable.pancakejp_titulo
     )
     val tituloComidaSem = listOf(
         "Katsudon ",
