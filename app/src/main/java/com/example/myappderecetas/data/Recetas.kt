@@ -367,7 +367,7 @@ object Recetas {
                 "Deje el sushi a un lado y repita para hacer 3 rollos de futomaki más",
                 "Limpia un cuchillo con un paño húmedo antes de cortar el futomaki. Corta el sushi futomaki enrollado en trozos pequeños."
             ),
-            imagenesPreparacion = listOf(R.drawable.paso1_futomaki, R.drawable.paso2_futomaki, R.drawable.paso3_futomaki, R.drawable.paso4_futomaki, R.drawable.paso5_futomaki, R.drawable.paso6_futomaki, R.drawable.paso7_futomaki, R.drawable.paso8_futomaki, R.drawable.paso9_futomaki, R.drawable.paso10_futomaki, R.drawable.paso11_futomaki, R.drawable.paso12_futomaki, R.drawable.paso13_futomaki, R.drawable.paso14_futomaki, R.drawable.paso15_futomaki, R.drawable.paso16_futomaki, R.drawable.paso17_futomaki, R.drawable.paso18_futomaki,R.drawable.paso19_futomaki ),
+            imagenesPreparacion = listOf(R.drawable.paso1_futomaki, R.drawable.paso2_futomaki, R.drawable.paso3_futomaki, R.drawable.paso4_futomaki, R.drawable.paso5_futomaki, R.drawable.paso6_futomaki, R.drawable.paso7_futomaki, R.drawable.paso8_futomaki, R.drawable.paso9_futomaki, R.drawable.paso10_futomaki, R.drawable.paso11_futomaki, R.drawable.paso13_futomaki, R.drawable.paso14_futomaki, R.drawable.paso15_futomaki, R.drawable.paso16_futomaki, R.drawable.paso17_futomaki, R.drawable.paso18_futomaki, R.drawable.paso19_futomaki,R.drawable.paso20_futomaki ),
             tiempo = "110 mins",
             personas = 4,
             etapasIngredientes = listOf("Para Kanpyō", "Para Tamagoyaki (tortilla de huevo)", "Para rollos Futomaki"),
@@ -400,7 +400,7 @@ object Recetas {
 
         Plato(
             id = 12,
-            imagen = R.drawable.tartaqueso_titulo,
+            imagen = R.drawable.kimbap_titulo,
             nombre = "Kimbap",
             descripcion = listOf("Los kimbap, también conocidos como gimbap, son rollos de arroz coreanos que pueden parecerse mucho a los rollos de sushi japoneses pero, en realidad, no se parecen en nada al sushi. Kimbap (de gim, un tipo de alga, y bap , el término coreano para \"arroz\") es fácil, portátil y adaptable a cualquier paladar, dieta u ocasión."),
             ingredientes = listOf("2 tazas de arroz blanco cocido de grano corto", "2 cucharaditas de aceite de sésamo", "2 cucharaditas de sal kosher", " ", "1 zanahoria mediana, pelada y cortada en juliana", "Sal al gusto", "1 pepino mediano , pelado, sin semillas y cortado en juliana", "2 huevos grandes , batidos", "4 hojas de nori seco", "Opcional: 8 onzas de bulgogi de carne cocida","1 paquete (10 onzas) de espinacas congeladas, cocidas y exprimidas", "1/2 taza de rábanos encurtidos, escurridos y cortados en juliana", "Opcional: 12 onzas de cangrejo de imitación, cortado en tiras largas"
@@ -424,7 +424,7 @@ object Recetas {
                 "Repite el proceso de montaje con las láminas de algas secas restantes. Refrigere los panecillos hasta que estén listos para servir.",
                 "Corta cada rollo en 7 a 8 trozos y sirve. Disfrutar.",
             ),
-            imagenesPreparacion = listOf(R.drawable.paso1_tartaqueso, R.drawable.paso2_tartaqueso, R.drawable.paso3_tartaqueso, R.drawable.paso4_tartaqueso, R.drawable.paso5_tartaqueso, R.drawable.paso6_tartaqueso, R.drawable.paso7_tartaqueso, R.drawable.paso8_tartaqueso, R.drawable.paso9_tartaqueso, R.drawable.paso10_tartaqueso, R.drawable.paso11_tartaqueso, R.drawable.paso12_tartaqueso, R.drawable.paso13_tartaqueso, R.drawable.paso14_tartaqueso, R.drawable.paso15_tartaqueso, R.drawable.paso16_tartaqueso, R.drawable.paso17_tartaqueso, R.drawable.paso18_tartaqueso ),
+            imagenesPreparacion = listOf(R.drawable.paso1_kimbap, R.drawable.paso2_kimbap, R.drawable.paso3_kimbap, R.drawable.paso4_kimbap, R.drawable.paso5_kimbap, R.drawable.paso6_kimbap, R.drawable.paso7_kimbap, R.drawable.paso8_kimbap, R.drawable.paso9_kimbap, R.drawable.paso10_kimbap, R.drawable.paso11_kimbap, R.drawable.paso12_kimbap, R.drawable.paso13_kimbap, R.drawable.paso14_kimbap, R.drawable.paso15_kimbap ),
             tiempo = "40 min",
             personas = 4,
             etapasIngredientes = listOf(""),
