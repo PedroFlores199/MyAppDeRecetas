@@ -2,6 +2,17 @@ package com.example.myappderecetas.screens
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,6 +26,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -29,10 +41,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -54,7 +70,11 @@ import com.example.myappderecetas.navegation.AppScreens
 import com.example.myappderecetas.ui.theme.Grey
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import com.example.myappderecetas.data.Plato
+import com.example.myappderecetas.data.Recetas
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.ZoneId
 
 
 @Preview
@@ -355,32 +375,30 @@ fun RecetasDeLaSemana () {
         )*/
     }
 }
-    val comida = listOf(
-        R.drawable.sushi,
-        R.drawable.cocarrois
-    )
 
-
+fun getCurrentDayOfYear(): Int {
+    val today = LocalDate.now(ZoneId.systemDefault())
+    return today.dayOfYear
+}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SwipeablePages (navController: NavController) {
+fun SwipeablePages(navController: NavController) {
+    val platos = Recetas.RecetasList
 
-    val comida = listOf(
-        R.drawable.katsudon_titulo,
-        R.drawable.pancakejp_titulo
-    )
-    val tituloComidaSem = listOf(
-        "Katsudon ",
-        "Cocarris"
-    )
-    val subTituloComidaSem = listOf(
-        "El katsudon es un plato japonés popular que consiste en tonkatsu (cerdo empanizado y frito) y huevos cocidos en un caldo dulce y salado servido sobre arroz.",
-        "La receta de cocarrois es una delicia originaria de Mallorca y también de Ibiza. Se caracteriza por tener como relleno una mezcla de diversas verduras con condimentos básicos."
-    )
+    // Obtener el día del año actual
+    val dayOfYear by remember { mutableStateOf(getCurrentDayOfYear()) }
 
-    var pagerState = rememberPagerState(initialPage = 0) {
-        comida.size
+    // Calcular el índice inicial basado en el día del año
+    val startIndex = dayOfYear % platos.size
+
+    // Seleccionar los 5 elementos para mostrar
+    val displayedPlatos = (0 until 5).map {
+        platos[(startIndex + it) % platos.size]
+    }
+
+    val pagerState = rememberPagerState(initialPage = 0) {
+        displayedPlatos.size
     }
 
     Box(
@@ -388,20 +406,29 @@ fun SwipeablePages (navController: NavController) {
             .fillMaxSize()
             .padding(10.dp)
     ) {
-        HorizontalPager(state = pagerState) { index ->
+        HorizontalPager(
+            state = pagerState,
+            pageSpacing = 16.dp // Añadir espacio entre las páginas
+        ) { index ->
 
+            AnimatedVisibility(
+                visible = pagerState.currentPage == index,
+                enter = fadeIn(animationSpec = tween(durationMillis = 300)) + scaleIn(initialScale = 0.8f, animationSpec = tween(durationMillis = 300)),
+                exit = fadeOut(animationSpec = tween(durationMillis = 300)) + scaleOut(targetScale = 0.8f, animationSpec = tween(durationMillis = 300))
+            ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .clip(RoundedCornerShape(20.dp))
                     .background(Color(color = 0xFF930D0D))
+
             ) {
                 Image(
-                    painter = painterResource(id = comida[index]),
+                    painter = painterResource(id = displayedPlatos[index].imagen),
                     contentDescription = null,
-                    contentScale = ContentScale.Inside,
-                    modifier = Modifier
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
                         .clickable { navController.navigate(route = AppScreens.Katsudon.route) }
-
                 )
                 Box(
                     modifier = Modifier
@@ -409,28 +436,33 @@ fun SwipeablePages (navController: NavController) {
                         .padding(20.dp)
                         .background(Color(color = 0xFF930D0D))
                 ) {
-                    Text(
-                        text = tituloComidaSem[index],
-                        color = Color.White,
-                        style = TextStyle(
-                            fontSize = 28.sp,
-                            fontWeight = FontWeight.Bold
-                        ),
-                        modifier = Modifier
-                            .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(bottom = 20.dp, start = 20.dp, end = 20.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = displayedPlatos[index].nombre,
+                            color = Color.White,
+                            style = TextStyle(
+                                fontSize = 28.sp,
+                                fontWeight = FontWeight.Bold,
+                            ),
+                            modifier = Modifier.padding(bottom = 10.dp)
+                        )
 
-                    )
-                    Text(
-                        text = subTituloComidaSem[index],
-                        color = Color.White,
-                        style = TextStyle(
-                            fontSize = 15.sp,
-                            fontWeight = FontWeight.Bold
-                        ), modifier = Modifier
-                            .padding(top = 50.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
-                    )
-
+                        Text(
+                            text = platos[index].descripcion.first(),
+                            color = Color.White,
+                            style = TextStyle(
+                                fontSize = 15.sp,
+                                fontWeight = FontWeight.Bold
+                            ),
+                            modifier = Modifier.padding(top = 50.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+                        )
+                    }
                 }
+            }
             }
         }
     }
@@ -441,18 +473,14 @@ fun SwipeablePages (navController: NavController) {
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
     ) {
-        repeat(comida.size) {
-
-            //Si la pagina actual coincide con el numero de iteracion del repeat se vera von un color gris oscuro
-            val color =
-                if (pagerState.currentPage == it) Color.DarkGray else Color.LightGray
-
-            val scope = rememberCoroutineScope()
+        val scope = rememberCoroutineScope()
+        repeat(displayedPlatos.size) {
+            val color = if (pagerState.currentPage == it) Color.DarkGray else Color.LightGray
             Box(
                 modifier = Modifier
-                    .padding(2.dp)
+                    .padding(5.dp)
                     .clip(CircleShape)
-                    .size(20.dp)
+                    .size(10.dp)
                     .background(color)
                     .clickable {
                         scope.launch {
@@ -463,15 +491,3 @@ fun SwipeablePages (navController: NavController) {
         }
     }
 }
-
-@Composable
-private fun configuration(): Configuration {
-    val configuracion = LocalConfiguration.current
-    return configuracion
-}
-
-
-
-
-
-

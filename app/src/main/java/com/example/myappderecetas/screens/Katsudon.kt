@@ -71,6 +71,7 @@ fun FragmentoKatsudon (navController: NavController) {
                 TituloComida(4)
                 Ingredientes(4)
                 Preparacion (4)
+
             }
         }
     }

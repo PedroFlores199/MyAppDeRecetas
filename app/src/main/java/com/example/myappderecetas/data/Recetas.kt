@@ -377,7 +377,7 @@ object Recetas {
         Plato(
             id = 11,
             imagen = R.drawable.rollitospicante_titulo,
-            nombre = "Rollitos de atún picantes",
+            nombre = "Rollitos de atún",
             descripcion = listOf(""),
             ingredientes = listOf("1/2 libra de atún grado sushi o atún grado sashimi, maguro", "1/2 libra de atún grado sushi o atún grado sashimi, maguro", "1/2 cucharadita de chile rojo seco molido , ichimi togarashi, al gusto", "4 hojas de nori", "6 tazas de arroz para sushi preparado", "6 tazas de arroz para sushi preparado",
                 ),
