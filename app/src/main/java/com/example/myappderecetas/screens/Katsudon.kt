@@ -44,20 +44,19 @@ import com.example.myappderecetas.ui.theme.fontFamily2
 @Preview
 @Composable
 fun MyPreviewKatsudon (navController: NavController = rememberNavController()) {
-    Katsudon(navController)
+    Katsudon(navController, 1)
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun Katsudon (navController: NavController) {
-    Scaffold{
-        FragmentoKatsudon(navController)
+fun Katsudon(navController: NavController, recipeId: Int) {
+    Scaffold {
+        FragmentoKatsudon(navController, recipeId)
     }
 }
 
-
 @Composable
-fun FragmentoKatsudon (navController: NavController) {
+fun FragmentoKatsudon(navController: NavController, recipeId: Int) {
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -66,14 +65,11 @@ fun FragmentoKatsudon (navController: NavController) {
     ) {
         LazyColumn {
             item {
-                //ParallaxSecToolbar(navController)
-                FotoReceta(4)
-                TituloComida(4)
-                Ingredientes(4)
-                Preparacion (4)
-
+                FotoReceta(recipeId)
+                TituloComida(recipeId)
+                Ingredientes(recipeId)
+                Preparacion(recipeId)
             }
         }
     }
 }
-

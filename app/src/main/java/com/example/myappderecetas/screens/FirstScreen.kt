@@ -127,21 +127,30 @@ fun ParallaxToolbar(navController: NavController) {
         modifier = Modifier
             .statusBarsPadding()
             .padding(10.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .background(Color.White)
+            .clickable { },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        Icon(
-            painter = painterResource(id = R.drawable.menu20px),
-            contentDescription = null,
-            tint = Grey,
+        Box(
             modifier = Modifier
                 .size(50.dp)
+                .clip(RoundedCornerShape(8.dp))
                 .clickable { }
-            //.padding(top = 20.dp, end = 16.dp)
-        )
+                .background(Color.White)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.menu20px),
+                contentDescription = null,
+                tint = Grey,
+                modifier = Modifier.size(50.dp)
 
+            )
+        }
+/*
         Image(
             painter = painterResource(id = R.drawable.icono_menu),
             contentDescription = null,
@@ -149,6 +158,7 @@ fun ParallaxToolbar(navController: NavController) {
                 .height(60.dp)
                 .clickable { }
         )
+ */
 
         Icon(
             painter = painterResource(id = R.drawable.search20px),
@@ -157,16 +167,26 @@ fun ParallaxToolbar(navController: NavController) {
             modifier = Modifier
                 .width(50.dp)
                 .height(50.dp)
-                .clickable { }
             //.padding(top = 20.dp, end = 16.dp)
         )
 
     }
 }
 
-
 @Composable
 fun PlatoDelDia (navController: NavController) {
+    val platos = Recetas.RecetasList
+
+    // Obtener el día del año actual
+    val dayOfYear by remember { mutableStateOf(getCurrentDayOfYear()) }
+
+    // Calcular el índice inicial basado en el día del año
+    val startIndex = dayOfYear % platos.size
+
+    // Seleccionar los 5 elementos para mostrar
+    val displayedPlatos = (0 until 1).map {
+        platos[(startIndex + it) % platos.size]
+    }
 
     Box(
         modifier = Modifier
@@ -184,7 +204,8 @@ fun PlatoDelDia (navController: NavController) {
                 .align(Alignment.BottomCenter)
                 .fillMaxSize()
                 .height(360.dp)
-                .clickable { navController.navigate(route = AppScreens.SecondScreen.route) }
+                .clickable {val recipeId = displayedPlatos.first().id
+                    navController.navigate(route = "${AppScreens.Katsudon.route}/$recipeId") }
         ) {
             Box {
                 ConstraintLayout {
@@ -208,7 +229,7 @@ fun PlatoDelDia (navController: NavController) {
                     )
 
                     Text(
-                        text = "Ramen con udon, shiitakes, huevo y langostinos",
+                        text = displayedPlatos.first().nombre,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier
                             .padding(bottom = 20.dp, start = 20.dp, end = 20.dp)
@@ -222,7 +243,7 @@ fun PlatoDelDia (navController: NavController) {
                     //Nota importante: Para que el texto tenga el mismo tamaño se pode sp en vez de dp
 
                     Text(
-                        text = "¡Hoy, la cena japonesa la hacemos en casa! Prepárales un ramen con udon, setas shiitake, huevo, espinacas y langostinos. Haz la lista de la compra con ingredientes orientales para que quede perfecto.",
+                        text = displayedPlatos.first().descripcion.first(),
                         modifier = Modifier
                             .padding(bottom = 20.dp, start = 20.dp, end = 20.dp)
                             .constrainAs(descripcionReceta) {
@@ -317,7 +338,7 @@ fun PlatoDelDia (navController: NavController) {
             }
 
             Image(
-                painter = painterResource(id = R.drawable.gyozas),
+                painter = painterResource(id = displayedPlatos.last().imagen),
                 contentDescription = null,
                 modifier = Modifier
                     .size(150.dp)
@@ -393,7 +414,7 @@ fun SwipeablePages(navController: NavController) {
     val startIndex = dayOfYear % platos.size
 
     // Seleccionar los 5 elementos para mostrar
-    val displayedPlatos = (0 until 5).map {
+    val displayedPlatos = (1 until 6).map {
         platos[(startIndex + it) % platos.size]
     }
 
@@ -413,9 +434,19 @@ fun SwipeablePages(navController: NavController) {
 
             AnimatedVisibility(
                 visible = pagerState.currentPage == index,
-                enter = fadeIn(animationSpec = tween(durationMillis = 300)) + scaleIn(initialScale = 0.8f, animationSpec = tween(durationMillis = 300)),
-                exit = fadeOut(animationSpec = tween(durationMillis = 300)) + scaleOut(targetScale = 0.8f, animationSpec = tween(durationMillis = 300))
+                enter = fadeIn(animationSpec = tween(durationMillis = 300)) + slideInHorizontally(initialOffsetX = { it }),
+                exit = fadeOut(animationSpec = tween(durationMillis = 300)) + slideOutHorizontally(targetOffsetX = { it })
             ) {
+
+            /*
+
+                AnimatedVisibility(
+                visible = pagerState.currentPage == index,
+                enter = fadeIn(animationSpec = tween(durationMillis = 500)) + scaleIn(initialScale = 0.8f, animationSpec = tween(durationMillis = 500)),
+                exit = fadeOut(animationSpec = tween(durationMillis = 500)) + scaleOut(targetScale = 0.8f, animationSpec = tween(durationMillis = 500)))
+                {
+
+             */
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -428,7 +459,8 @@ fun SwipeablePages(navController: NavController) {
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
-                        .clickable { navController.navigate(route = AppScreens.Katsudon.route) }
+                        .clickable { val recipeId = displayedPlatos[index].id
+                            navController.navigate(route = "${AppScreens.Katsudon.route}/$recipeId") }
                 )
                 Box(
                     modifier = Modifier
@@ -458,7 +490,9 @@ fun SwipeablePages(navController: NavController) {
                                 fontSize = 15.sp,
                                 fontWeight = FontWeight.Bold
                             ),
-                            modifier = Modifier.padding(top = 50.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+                            modifier = Modifier.padding(top = 50.dp, bottom = 20.dp, start = 20.dp, end = 20.dp),
+                            maxLines = 3,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                 }
