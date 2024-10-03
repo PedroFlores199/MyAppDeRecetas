@@ -33,6 +33,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -110,8 +111,10 @@ fun FragmentoProncipal (navController: NavController ) {
         item {
             ParallaxToolbar(navController)
             PlatoDelDia(navController)
-            RecetasDeLaSemana()
+            // RecetasDeLaSemana()
             SwipeablePages(navController)
+
+
         }
     }
     }
@@ -361,6 +364,7 @@ data class Ingrediente(
 val recipeList = listOf(Ingrediente(R.drawable.ramen_seg_pan, "Ramen", listOf("150 gramos de fideos noodles", "2 huevos", "Cebolletas para usar la parte verde", "1 alga nori", "1 litro de caldo de pollo", "6 setas shiitake", "1 pechugas de pollo", "4 dientes de ajo", "80 mililitros de salsa de soja", "2 cucharadas de aceite de oliva", "1 trozo de jengibre" , "30 gramos de mantequilla", "2 cucharaditas de azúcar", "1 cucharadita de sal"))
     , listOf(Ingrediente(R.drawable.ramen_seg_pan, "Cocarrois", listOf("250 gramos de manteca", "Un vaso de aceite de oliva", "250 mililitros de agua", "900 gramos de harina", "sal", "1 coliflor", "20 gramos de acelgas", "Aceite de oliva", "sal", "Pimienta", "Pimenton"))))
 */
+/*
 @Composable
 fun RecetasDeLaSemana () {
     Spacer(
@@ -398,18 +402,24 @@ fun RecetasDeLaSemana () {
         )*/
     }
 }
+*/
 
 fun getCurrentDayOfYear(): Int {
     val today = LocalDate.now(ZoneId.systemDefault())
     return today.dayOfYear
 }
 
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SwipeablePages(navController: NavController) {
+    // Obtener la configuración actual
+    val configuracion = LocalConfiguration.current
+
+    // Obtener los platos
     val platos = Recetas.RecetasList
 
-    // Obtener el día del año actual
+    // Obtener el día del año actual de manera optimizada
     val dayOfYear by remember { mutableStateOf(getCurrentDayOfYear()) }
 
     // Calcular el índice inicial basado en el día del año
@@ -420,49 +430,121 @@ fun SwipeablePages(navController: NavController) {
         platos[(startIndex + it) % platos.size]
     }
 
-    val pagerState = rememberPagerState(initialPage = 0) {
+    val pagerStateSimples = rememberPagerState(initialPage = 0) {
         displayedPlatos.size
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(10.dp)
-    ) {
-        HorizontalPager(
-            state = pagerState,
-            pageSpacing = 16.dp // Añadir espacio entre las páginas
-        ) { index ->
+    val pagerStateComplejas = rememberPagerState(initialPage = 0) {
+        displayedPlatos.size
+    }
 
-            AnimatedVisibility(
-                visible = pagerState.currentPage == index,
-                enter = fadeIn(animationSpec = tween(durationMillis = 300)) + slideInHorizontally(initialOffsetX = { it }),
-                exit = fadeOut(animationSpec = tween(durationMillis = 300)) + slideOutHorizontally(targetOffsetX = { it })
+    if (configuracion.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        // En modo horizontal, mostrar los dos swipeables en columnas (uno al lado del otro)
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.height(30.dp)) // Espacio entre el título y los swipeables
+
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
+                Column(
+                    modifier = Modifier.weight(1f).padding(10.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally // Centrar el contenido horizontalmente
+                ) {
+                    Text(
+                        text = "Recetas Simples",
+                        style = TextStyle(
+                            color = Color(color = 0xFF930D0D),
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.Bold
+                        ),
+                        modifier = Modifier.padding(bottom = 10.dp) // Espacio entre el título y el swipeable
+                    )
+                    SwipeablePagesSimples(navController, pagerStateSimples, displayedPlatos)
+                }
+                Column(
+                    modifier = Modifier.weight(1f).padding(10.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally // Centrar el contenido horizontalmente
+                ) {
+                    Text(
+                        text = "Recetas Complejas",
+                        style = TextStyle(
+                            color = Color(color = 0xFF930D0D),
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.Bold
+                        ),
+                        modifier = Modifier.padding(bottom = 10.dp) // Espacio entre el título y el swipeable
+                    )
+                    SwipeablePagesComplejas(navController, pagerStateComplejas, displayedPlatos)
+                }
+            }
+        }
+    } else {
+        // En modo vertical, mostrar los swipeables apilados uno debajo del otro
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Text(
+                text = "Recetas Simples",
+                style = TextStyle(
+                    color = Color(color = 0xFF930D0D),
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold
+                ),
+                modifier = Modifier.padding(bottom = 10.dp) // Espacio entre el título y el swipeable
+            )
+            SwipeablePagesSimples(navController, pagerStateSimples, displayedPlatos)
 
-            /*
+            Text(
+                text = "Recetas Complejas",
+                style = TextStyle(
+                    color = Color(color = 0xFF930D0D),
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold
+                ),
+                modifier = Modifier.padding(bottom = 10.dp) // Espacio entre el título y el swipeable
+            )
+            SwipeablePagesComplejas(navController, pagerStateComplejas, displayedPlatos)
+        }
+    }
+}
 
-                AnimatedVisibility(
-                visible = pagerState.currentPage == index,
-                enter = fadeIn(animationSpec = tween(durationMillis = 500)) + scaleIn(initialScale = 0.8f, animationSpec = tween(durationMillis = 500)),
-                exit = fadeOut(animationSpec = tween(durationMillis = 500)) + scaleOut(targetScale = 0.8f, animationSpec = tween(durationMillis = 500)))
-                {
 
-             */
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun SwipeablePagesSimples(
+    navController: NavController,
+    pagerState: PagerState,
+    displayedPlatos: List<Plato>
+) {
+    HorizontalPager(
+        state = pagerState,
+        pageSpacing = 16.dp // Añadir espacio entre las páginas
+    ) { index ->
+        AnimatedVisibility(
+            visible = pagerState.currentPage == index,
+            enter = fadeIn(animationSpec = tween(durationMillis = 300)) + slideInHorizontally(initialOffsetX = { it }),
+            exit = fadeOut(animationSpec = tween(durationMillis = 300)) + slideOutHorizontally(targetOffsetX = { it })
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(20.dp))
                     .background(Color(color = 0xFF930D0D))
-
             ) {
                 Image(
                     painter = painterResource(id = displayedPlatos[index].imagen),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
-                        .clickable { val recipeId = displayedPlatos[index].id
-                            navController.navigate(route = "${AppScreens.CarruselRecetas.route}/$recipeId") }
+                        .clickable {
+                            val recipeId = displayedPlatos[index].id
+                            navController.navigate(route = "${AppScreens.CarruselRecetas.route}/$recipeId")
+                        }
                 )
                 Box(
                     modifier = Modifier
@@ -486,7 +568,7 @@ fun SwipeablePages(navController: NavController) {
                         )
 
                         Text(
-                            text = platos[index].descripcion.first(),
+                            text = displayedPlatos[index].descripcion.first(),
                             color = Color.White,
                             style = TextStyle(
                                 fontSize = 15.sp,
@@ -499,31 +581,77 @@ fun SwipeablePages(navController: NavController) {
                     }
                 }
             }
-            }
         }
     }
+}
 
-    Row(
-        Modifier
-            .height(100.dp)
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        val scope = rememberCoroutineScope()
-        repeat(displayedPlatos.size) {
-            val color = if (pagerState.currentPage == it) Color.DarkGray else Color.LightGray
-            Box(
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun SwipeablePagesComplejas(
+    navController: NavController,
+    pagerState: PagerState,
+    displayedPlatos: List<Plato>
+) {
+    HorizontalPager(
+        state = pagerState,
+        pageSpacing = 16.dp // Añadir espacio entre las páginas
+    ) { index ->
+        AnimatedVisibility(
+            visible = pagerState.currentPage == index,
+            enter = fadeIn(animationSpec = tween(durationMillis = 300)) + slideInHorizontally(initialOffsetX = { it }),
+            exit = fadeOut(animationSpec = tween(durationMillis = 300)) + slideOutHorizontally(targetOffsetX = { it })
+        ) {
+            Column(
                 modifier = Modifier
-                    .padding(5.dp)
-                    .clip(CircleShape)
-                    .size(10.dp)
-                    .background(color)
-                    .clickable {
-                        scope.launch {
-                            pagerState.animateScrollToPage(it)
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(Color(color = 0xFF930D0D))
+            ) {
+                Image(
+                    painter = painterResource(id = displayedPlatos[index].imagen),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
+                        .clickable {
+                            val recipeId = displayedPlatos[index].id
+                            navController.navigate(route = "${AppScreens.CarruselRecetas.route}/$recipeId")
                         }
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp)
+                        .background(Color(color = 0xFF930D0D))
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(bottom = 20.dp, start = 20.dp, end = 20.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = displayedPlatos[index].nombre,
+                            color = Color.White,
+                            style = TextStyle(
+                                fontSize = 28.sp,
+                                fontWeight = FontWeight.Bold,
+                            ),
+                            modifier = Modifier.padding(bottom = 10.dp)
+                        )
+
+                        Text(
+                            text = displayedPlatos[index].descripcion.first(),
+                            color = Color.White,
+                            style = TextStyle(
+                                fontSize = 15.sp,
+                                fontWeight = FontWeight.Bold
+                            ),
+                            modifier = Modifier.padding(top = 50.dp, bottom = 20.dp, start = 20.dp, end = 20.dp),
+                            maxLines = 3,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     }
-            )
+                }
+            }
         }
     }
 }

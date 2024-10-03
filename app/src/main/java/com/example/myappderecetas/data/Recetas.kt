@@ -139,7 +139,7 @@ object Recetas {
             nombre = "Ramen Shoyu rápido",
             descripcion = listOf("El shoyu es solo uno de los varios tipos de ramen. Otras categorías comunes incluyen el shio, tonkotsu y miso ramen. Entre estos, la versión con salsa de soya se destaca por sus fideos rizados y su caldo ligero, pero sabroso, salado y con un toque ácido. Haz de esto una comida sirviéndolo junto con tempura de vegetales o cubre tus tazones con pollo, cerdo o vegetales cocidos."),
             ingredientes = listOf("1 cucharadita de aceite de sésamo", "1 cucharadita de jengibre fresco picado", "1 diente de ajo , picado", "2 tazas de caldo de pollo", "1 taza de caldo de sopa kombu dashi casero o comprado en la tienda", "3 cucharadas de salsa de soja", "1 cucharada de sake", "1 cucharadita de azúcar", "1 cucharadita de sal","2 paquetes (3 onzas) de fideos chukamen secos", "Negi , o cebolleta , picada, para decorar opcionalmente", "Nori , algas secas, para decorar opcionalmente", "Pimienta negra recién molida , al gusto"
-                ),
+            ),
 
             pasosPreparacion = listOf(
                 "Reúne los ingredientes.",
@@ -152,7 +152,7 @@ object Recetas {
                 "Escurre los fideos y agrégalos a la sopa caliente.",
                 "Agregue aderezos, como algas negi y nori picadas, si lo desea. Espolvorea con pimienta al gusto.",
 
-            ),
+                ),
             imagenesPreparacion = listOf(R.drawable.paso1_ramenshoyuo, R.drawable.paso2_ramenshoyuo, R.drawable.paso3_ramenshoyuo, R.drawable.paso4_ramenshoyuo, R.drawable.paso5_ramenshoyuo, R.drawable.paso6_ramenshoyuo, R.drawable.paso7_ramenshoyuo, R.drawable.paso8_ramenshoyuo, R.drawable.paso9_ramenshoyuo),
             tiempo = "30 min",
             personas = 2,
@@ -166,7 +166,7 @@ object Recetas {
             nombre = "Makizushi (rollo de atún japonés)",
             descripcion = listOf("Los rollos de sushi de ensalada de atún son largos rollos de sushi rellenos de ensalada de atún y envueltos en arroz y alga nori. Este estilo de rollo de sushi se conoce como makizushi o maki sushi, que significa sushi enrollado en japonés."),
             ingredientes = listOf("1 cucharada de cebolla finamente picada", "2/3 taza de atún enlatado", "1 cucharada de mayonesa", "1 pizca de sal", "1 cucharadita de mostaza picante japonesa (karashi), opcional", "4 hojas de nori (alga seca)", "6 tazas de arroz para sushi cocido", "Gari shoga (jengibre dulce encurtido), para decorar", "2 cucharaditas de semillas de sésamo tostadas y/o negras , opcional", "Salsa de soja, para servir"
-                ),
+            ),
             pasosPreparacion = listOf(
                 "Reúne los ingredientes.",
                 "Para hacer la mezcla de ensalada de atún, mezcle la cebolla picada, el atún, la mayonesa y la sal en un bol. Alternativamente, use su receta favorita de ensalada de atún . Si prefiere la ensalada de atún picante, agregue un poco de mostaza karashi a la mezcla de ensalada de atún.",
@@ -189,7 +189,7 @@ object Recetas {
             nombre = "Rollitos de atún",
             descripcion = listOf("Los rollos de atún picantes son un artículo omnipresente en American menús de sushi. El condimento que hace que el atún sea picante es ichimi togarashi , que se traduce como \"ají de un sabor\" y consta solo de ají rojo molido. Tiene un picante suave, similar al ají chipotle, y añade un toque extra agradable sin ser abrumadoramente picante. "),
             ingredientes = listOf("1/2 libra de atún grado sushi o atún grado sashimi, maguro", "1/2 libra de atún grado sushi o atún grado sashimi, maguro", "1/2 cucharadita de chile rojo seco molido , ichimi togarashi, al gusto", "4 hojas de nori", "6 tazas de arroz para sushi preparado", "6 tazas de arroz para sushi preparado",
-                ),
+            ),
             pasosPreparacion = listOf(
                 "Reúne los ingredientes",
                 "Pica el atún crudo en cubos pequeños con un cuchillo afilado. Combine con la mayonesa y el ichimi togarashi en un bol y mezcle.",
@@ -214,7 +214,7 @@ object Recetas {
             nombre = "Tekkamaki",
             descripcion = listOf("El tekkamaki o (rollitos de atún) utiliza atún crudo, que tiene un bonito color rojo en contraste con el arroz blanco. Se dice que el nombre tekka , \"hierro candente\", proviene de este color. Sólo necesitas un poquito de pescado para cada rollo."),
             ingredientes = listOf("4 hojas de nori", "4 onzas de  atún apto para sushi", "6 tazas de arroz para sushi preparado", "Salsa de soja y wasabi, para servir"
-                ),
+            ),
             pasosPreparacion = listOf(
                 "Reúne los ingredientes.",
                 "Corte el nori por la mitad a 4 x 7 1/2 pulgadas.",
@@ -235,7 +235,5 @@ object Recetas {
             etapasIngredientes = listOf(""),
             etapasPreparacion = listOf("")
         ),
-
-
-        )
+    )
 }

@@ -36,7 +36,7 @@ import com.example.myappderecetas.ui.theme.fontFamily
 import com.example.myappderecetas.ui.theme.fontFamily2
 
 @Composable
-fun Ingredientes (platoId: Int) {
+fun IngredientesComplejas (platoId: Int) {
     val plato = Recetas.RecetasList.find { it.id == platoId }
 
     Text(
@@ -68,7 +68,7 @@ fun Ingredientes (platoId: Int) {
 }
 
 @Composable
-fun Preparacion (platoId: Int) {
+fun PreparacionComplejas (platoId: Int) {
     val plato = Recetas.RecetasList.find { it.id == platoId }
 
     Text(
@@ -144,7 +144,7 @@ fun Preparacion (platoId: Int) {
 }
 
 @Composable
-fun TituloComida(platoId: Int) {
+fun TituloComidaComplejas(platoId: Int) {
     val plato = Recetas.RecetasList.find { it.id == platoId }
     plato?.let { recipe ->
 
@@ -162,22 +162,22 @@ fun TituloComida(platoId: Int) {
 
 
         recipe.descripcion.forEach { descripcion ->
-                Text(
-                    text = descripcion + "\n",
-                    fontFamily = fontFamily2,
-                    color = Color.Black,
-                    style = TextStyle(
-                        fontSize = 18.sp
-                    ),
-                    modifier = Modifier
-                        .padding(top = 3.dp, bottom = 2.dp, start = 20.dp, end = 10.dp)
-                )
-            }
+            Text(
+                text = descripcion + "\n",
+                fontFamily = fontFamily2,
+                color = Color.Black,
+                style = TextStyle(
+                    fontSize = 18.sp
+                ),
+                modifier = Modifier
+                    .padding(top = 3.dp, bottom = 2.dp, start = 20.dp, end = 10.dp)
+            )
         }
     }
+}
 
 @Composable
-fun FotoReceta (platoId : Int){
+fun FotoRecetaComplejas (platoId : Int){
     val plato = Recetas.RecetasList.find { it.id == platoId }
     plato?.let { recipe ->
         Box {
@@ -186,13 +186,13 @@ fun FotoReceta (platoId : Int){
                 contentDescription = null,
                 modifier = Modifier.fillMaxWidth(),
                 contentScale = ContentScale.Crop
-                )
+            )
         }
     }
 }
 
 @Composable
-fun InfoReceta (platoId : Int) {
+fun InfoRecetaComplejas (platoId : Int) {
     val plato = Recetas.RecetasList.find { it.id == platoId }
     plato?.let { recipe ->
 
@@ -303,3 +303,180 @@ fun InfoReceta (platoId : Int) {
         }
     }
 }
+
+
+@Composable
+fun IngredientesGyozas (platoId : Int) {
+    val plato = Recetas.RecetasList.find { it.id == platoId }
+    plato?.let { recipe ->
+        // Separate ingredients into masa, relleno, and salsa
+        val masaGyozas = recipe.ingredientes.subList(0, 3)
+        val rellenoDeGyozas = recipe.ingredientes.subList(4, 14)
+        val salsaGyozas = recipe.ingredientes.subList(15, recipe.ingredientes.size)
+        Column {
+            Text(
+                text = "Ingredientes",
+                fontFamily = fontFamily,
+                color = Color.Black,
+                style = TextStyle(
+                    fontSize = 50.sp,
+                    fontWeight = FontWeight.Bold
+                ),
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 10.dp, start = 20.dp, end = 20.dp)
+            )
+
+            // Masa de Gyozas
+            Text(
+                text = "Para la masa de Gyozas",
+                fontFamily = fontFamily,
+                color = Color.Black,
+                style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.Bold),
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 10.dp, start = 20.dp, end = 20.dp)
+            )
+
+            for (ingrediente in masaGyozas) {
+                Text(
+                    text = ingrediente,
+                    fontFamily = fontFamily2,
+                    color = Color.Black,
+                    style = TextStyle(fontSize = 18.sp),
+                    modifier = Modifier
+                        .padding(top = 3.dp, bottom = 3.dp, start = 20.dp, end = 10.dp)
+                )
+            }
+
+            // Relleno de Gyozas
+            Text(
+                text = "Para el relleno de gyozas",
+                fontFamily = fontFamily,
+                color = Color.Black,
+                style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.Bold),
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+            )
+
+            for (ingrediente in rellenoDeGyozas) {
+                Text(
+                    text = ingrediente,
+                    fontFamily = fontFamily2,
+                    color = Color.Black,
+                    style = TextStyle(fontSize = 18.sp),
+                    modifier = Modifier
+                        .padding(top = 4.dp, bottom = 3.dp, start = 20.dp, end = 10.dp)
+                )
+            }
+
+            // Salsa de Gyozas
+            Text(
+                text = "Para la salsa de Gyozas",
+                fontFamily = fontFamily,
+                color = Color.Black,
+                style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.Bold),
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+            )
+
+            for (ingrediente in salsaGyozas) {
+                Text(
+                    text = ingrediente,
+                    fontFamily = fontFamily2,
+                    color = Color.Black,
+                    style = TextStyle(fontSize = 18.sp),
+                    modifier = Modifier
+                        .padding(top = 3.dp, bottom = 3.dp, start = 20.dp, end = 10.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun IngredientesTartaQueso (platoId : Int) {
+    val plato = Recetas.RecetasList.find { it.id == platoId }
+    plato?.let { recipe ->
+        // Separate ingredients into masa, relleno, and salsa
+        val masaQuesoCrema = recipe.ingredientes.subList(0, 8)
+        val merengue = recipe.ingredientes.subList(9, 11)
+        val guarnicion = recipe.ingredientes.subList(12, recipe.ingredientes.size)
+        Column {
+            Text(
+                text = "Ingredientes",
+                fontFamily = fontFamily,
+                color = Color.Black,
+                style = TextStyle(
+                    fontSize = 50.sp,
+                    fontWeight = FontWeight.Bold
+                ),
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 10.dp, start = 20.dp, end = 20.dp)
+            )
+
+            // Para la masa de queso crema
+            Text(
+                text = "Para la masa de queso crema",
+                fontFamily = fontFamily,
+                color = Color.Black,
+                style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.Bold),
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 10.dp, start = 20.dp, end = 20.dp)
+            )
+
+            for (ingrediente in masaQuesoCrema) {
+                Text(
+                    text = ingrediente,
+                    fontFamily = fontFamily2,
+                    color = Color.Black,
+                    style = TextStyle(fontSize = 18.sp),
+                    modifier = Modifier
+                        .padding(top = 3.dp, bottom = 3.dp, start = 20.dp, end = 10.dp)
+                )
+            }
+
+            // Para hacer el merengue
+            Text(
+                text = "Para hacer el merengue",
+                fontFamily = fontFamily,
+                color = Color.Black,
+                style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.Bold),
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+            )
+
+            for (ingrediente in merengue) {
+                Text(
+                    text = ingrediente,
+                    fontFamily = fontFamily2,
+                    color = Color.Black,
+                    style = TextStyle(fontSize = 18.sp),
+                    modifier = Modifier
+                        .padding(top = 4.dp, bottom = 3.dp, start = 20.dp, end = 10.dp)
+                )
+            }
+
+            // Para la guarnición
+            Text(
+                text = "Para la salsa de Gyozas",
+                fontFamily = fontFamily,
+                color = Color.Black,
+                style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.Bold),
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+            )
+
+            for (ingrediente in guarnicion) {
+                Text(
+                    text = ingrediente,
+                    fontFamily = fontFamily2,
+                    color = Color.Black,
+                    style = TextStyle(fontSize = 18.sp),
+                    modifier = Modifier
+                        .padding(top = 3.dp, bottom = 3.dp, start = 20.dp, end = 10.dp)
+                )
+            }
+        }
+    }
+}
+
+
