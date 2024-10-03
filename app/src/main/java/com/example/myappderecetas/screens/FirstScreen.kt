@@ -205,7 +205,7 @@ fun PlatoDelDia (navController: NavController) {
                 .fillMaxSize()
                 .height(360.dp)
                 .clickable {val recipeId = displayedPlatos.first().id
-                    navController.navigate(route = "${AppScreens.Katsudon.route}/$recipeId") }
+                    navController.navigate(route = "${AppScreens.CarruselRecetas.route}/$recipeId") }
         ) {
             Box {
                 ConstraintLayout {
@@ -344,7 +344,9 @@ fun PlatoDelDia (navController: NavController) {
                     .size(150.dp)
                     .clip(RoundedCornerShape(20.dp))
                     .align(Alignment.TopCenter)
-                    .clickable { navController.navigate(route = AppScreens.SecondScreen.route) }
+                    .clickable {
+                        navController.navigate(AppScreens.CarruselRecetas.createRoute(displayedPlatos.last().id))
+                    }
             )
     }
 }
@@ -460,7 +462,7 @@ fun SwipeablePages(navController: NavController) {
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
                         .clickable { val recipeId = displayedPlatos[index].id
-                            navController.navigate(route = "${AppScreens.Katsudon.route}/$recipeId") }
+                            navController.navigate(route = "${AppScreens.CarruselRecetas.route}/$recipeId") }
                 )
                 Box(
                     modifier = Modifier

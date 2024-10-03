@@ -84,6 +84,7 @@ fun Preparacion (platoId: Int) {
     )
 
     val configuracion = LocalConfiguration.current
+
     when (configuracion.orientation) {
         Configuration.ORIENTATION_LANDSCAPE -> {
             plato?.let {
@@ -302,6 +303,8 @@ fun InfoReceta (platoId : Int) {
         }
     }
 }
+
+
 @Composable
 fun IngredientesGyozas (platoId : Int) {
     val plato = Recetas.RecetasList.find { it.id == platoId }
@@ -388,4 +391,92 @@ fun IngredientesGyozas (platoId : Int) {
         }
     }
 }
+
+@Composable
+fun IngredientesTartaQueso (platoId : Int) {
+    val plato = Recetas.RecetasList.find { it.id == platoId }
+    plato?.let { recipe ->
+        // Separate ingredients into masa, relleno, and salsa
+        val masaQuesoCrema = recipe.ingredientes.subList(0, 8)
+        val merengue = recipe.ingredientes.subList(9, 11)
+        val guarnicion = recipe.ingredientes.subList(12, recipe.ingredientes.size)
+        Column {
+            Text(
+                text = "Ingredientes",
+                fontFamily = fontFamily,
+                color = Color.Black,
+                style = TextStyle(
+                    fontSize = 50.sp,
+                    fontWeight = FontWeight.Bold
+                ),
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 10.dp, start = 20.dp, end = 20.dp)
+            )
+
+            // Para la masa de queso crema
+            Text(
+                text = "Para la masa de queso crema",
+                fontFamily = fontFamily,
+                color = Color.Black,
+                style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.Bold),
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 10.dp, start = 20.dp, end = 20.dp)
+            )
+
+            for (ingrediente in masaQuesoCrema) {
+                Text(
+                    text = ingrediente,
+                    fontFamily = fontFamily2,
+                    color = Color.Black,
+                    style = TextStyle(fontSize = 18.sp),
+                    modifier = Modifier
+                        .padding(top = 3.dp, bottom = 3.dp, start = 20.dp, end = 10.dp)
+                )
+            }
+
+            // Para hacer el merengue
+            Text(
+                text = "Para hacer el merengue",
+                fontFamily = fontFamily,
+                color = Color.Black,
+                style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.Bold),
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+            )
+
+            for (ingrediente in merengue) {
+                Text(
+                    text = ingrediente,
+                    fontFamily = fontFamily2,
+                    color = Color.Black,
+                    style = TextStyle(fontSize = 18.sp),
+                    modifier = Modifier
+                        .padding(top = 4.dp, bottom = 3.dp, start = 20.dp, end = 10.dp)
+                )
+            }
+
+            // Para la guarnición
+            Text(
+                text = "Para la salsa de Gyozas",
+                fontFamily = fontFamily,
+                color = Color.Black,
+                style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.Bold),
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+            )
+
+            for (ingrediente in guarnicion) {
+                Text(
+                    text = ingrediente,
+                    fontFamily = fontFamily2,
+                    color = Color.Black,
+                    style = TextStyle(fontSize = 18.sp),
+                    modifier = Modifier
+                        .padding(top = 3.dp, bottom = 3.dp, start = 20.dp, end = 10.dp)
+                )
+            }
+        }
+    }
+}
+
 

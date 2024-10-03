@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-06-26T17:48:49.253866700Z">
+        <DropdownSelection timestamp="2024-10-03T20:55:18.993923700Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Peanf\.android\avd\Pixel_8_Pro_API_34.avd" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Peanf\.android\avd\Pixel_Fold_API_35.avd" />
             </handle>
           </Target>
         </DropdownSelection>
@@ -15,41 +15,17 @@
           <targets>
             <Target type="DEFAULT_BOOT">
               <handle>
-                <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Peanf\.android\avd\Pixel_Tablet_API_34.avd" />
+                <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Peanf\.android\avd\Pixel_Fold_API_35.avd" />
               </handle>
             </Target>
             <Target type="DEFAULT_BOOT">
               <handle>
-                <DeviceId pluginId="PhysicalDevice" identifier="serial=87a59aa3" />
-              </handle>
-            </Target>
-          </targets>
-        </DialogSelection>
-      </SelectionState>
-      <SelectionState runConfigName="MyPreviewMain">
-        <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-06-07T19:47:08.433288900Z">
-          <Target type="DEFAULT_BOOT">
-            <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Peanf\.android\avd\Pixel_8_Pro_API_30.avd" />
-            </handle>
-          </Target>
-        </DropdownSelection>
-        <DialogSelection>
-          <targets>
-            <Target type="DEFAULT_BOOT">
-              <handle>
-                <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Peanf\.android\avd\Pixel_8_Pro_API_30.avd" />
+                <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Peanf\.android\avd\Pixel_8_Pro_API_35.avd" />
               </handle>
             </Target>
             <Target type="DEFAULT_BOOT">
               <handle>
-                <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Peanf\.android\avd\Pixel_Tablet_API_34.avd" />
-              </handle>
-            </Target>
-            <Target type="DEFAULT_BOOT">
-              <handle>
-                <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Peanf\.android\avd\Pixel_Fold_API_34.avd" />
+                <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Peanf\.android\avd\Pixel_Tablet_API_35.avd" />
               </handle>
             </Target>
           </targets>

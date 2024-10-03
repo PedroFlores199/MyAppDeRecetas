@@ -8,9 +8,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.myappderecetas.screens.CarruselRecetas
 import com.example.myappderecetas.screens.FirstScreen
-import com.example.myappderecetas.screens.Katsudon
-import com.example.myappderecetas.screens.SecondScreen
+import com.example.myappderecetas.screens.Gyozas
+import com.example.myappderecetas.screens.TartaQueso
 
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -23,15 +24,17 @@ fun AppNavigation() {
             composable(route = AppScreens.FirstScreen.route) {
                 FirstScreen(navController)
             }
+            //Esto es para la imagen del primer componente de la aplicacion
             composable(route = AppScreens.SecondScreen.route) {
-                SecondScreen(navController)
+                Gyozas(navController)
             }
+            //Esto es para navegar entre las pantallas del carrusel y que al clickearle salga la receta correcta
             composable(
-                route = "${AppScreens.Katsudon.route}/{recipeId}",
+                route = "${AppScreens.CarruselRecetas.route}/{recipeId}",
                 arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
             ) { backStackEntry ->
                 val recipeId = backStackEntry.arguments?.getInt("recipeId") ?: 0
-                Katsudon(navController, recipeId)
+                CarruselRecetas(navController, recipeId)
             }
     }
 }
