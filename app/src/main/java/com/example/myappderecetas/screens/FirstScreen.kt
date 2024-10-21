@@ -3,6 +3,7 @@ package com.example.myappderecetas.screens
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -20,6 +21,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -32,24 +35,50 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarColors
+import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -71,8 +100,14 @@ import com.example.myappderecetas.navegation.AppScreens
 import com.example.myappderecetas.ui.theme.Grey
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.isTraversalGroup
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.traversalIndex
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myappderecetas.data.Plato
 import com.example.myappderecetas.data.Recetas
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.ZoneId
@@ -109,7 +144,8 @@ fun FragmentoProncipal (navController: NavController ) {
     )
     {    LazyColumn {
         item {
-            ParallaxToolbar(navController)
+            //BarraBusqueda()
+            //ParallaxToolbar(navController)
             PlatoDelDia(navController)
             // RecetasDeLaSemana()
             SwipeablePages(navController)
@@ -120,6 +156,51 @@ fun FragmentoProncipal (navController: NavController ) {
     }
 }
 
+
+@Composable
+fun BarraBusqueda() {
+    var text by rememberSaveable { mutableStateOf("") }
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    val focusRequester = remember { FocusRequester() }
+    val coroutineScope = rememberCoroutineScope()
+
+    Box(Modifier.fillMaxSize()) {
+        Column {
+            // Campo de búsqueda utilizando TextField
+            TextField(
+                value = text,
+                onValueChange = { newText -> text = newText },
+                placeholder = { Text("Buscar recetas...") },
+                leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Ícono de búsqueda") },
+                trailingIcon = {
+                    if (text.isNotEmpty()) {
+                        IconButton(onClick = { text = "" }) {
+                            Icon(Icons.Default.Clear, contentDescription = "Limpiar búsqueda")
+                        }
+                    } else {
+                        Icon(Icons.Default.MoreVert, contentDescription = "Más opciones")
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester)
+                    .onFocusChanged { focusState ->
+                        expanded = focusState.isFocused // Cambia el estado expandido basado en el enfoque
+                    },
+            )
+
+            // Mostrar recetas filtradas cuando hay texto de búsqueda
+            if (text.isNotEmpty()) {
+                val filteredOptions = Recetas.RecetasList.filter { it.nombre.contains(text, ignoreCase = true) }
+                LazyColumn {
+                    items(filteredOptions) { receta ->
+                        Text(text = receta.nombre, modifier = Modifier.padding(8.dp))
+                    }
+                }
+            }
+        }
+    }
+}
 
 
 
@@ -207,8 +288,10 @@ fun PlatoDelDia (navController: NavController) {
                 .align(Alignment.BottomCenter)
                 .fillMaxSize()
                 .height(360.dp)
-                .clickable {val recipeId = displayedPlatos.first().id
-                    navController.navigate(route = "${AppScreens.CarruselRecetas.route}/$recipeId") }
+                .clickable {
+                    val recipeId = displayedPlatos.first().id
+                    navController.navigate(route = "${AppScreens.CarruselRecetas.route}/$recipeId")
+                }
         ) {
             Box {
                 ConstraintLayout {
@@ -348,7 +431,11 @@ fun PlatoDelDia (navController: NavController) {
                     .clip(RoundedCornerShape(20.dp))
                     .align(Alignment.TopCenter)
                     .clickable {
-                        navController.navigate(AppScreens.CarruselRecetas.createRoute(displayedPlatos.last().id))
+                        navController.navigate(
+                            AppScreens.CarruselRecetas.createRoute(
+                                displayedPlatos.last().id
+                            )
+                        )
                     }
             )
     }
@@ -451,7 +538,9 @@ fun SwipeablePages(navController: NavController) {
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Column(
-                    modifier = Modifier.weight(1f).padding(10.dp),
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(30.dp),
                     horizontalAlignment = Alignment.CenterHorizontally // Centrar el contenido horizontalmente
                 ) {
                     Text(
@@ -466,8 +555,10 @@ fun SwipeablePages(navController: NavController) {
                     SwipeablePagesSimples(navController, pagerStateSimples, displayedPlatos)
                 }
                 Column(
-                    modifier = Modifier.weight(1f).padding(10.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally // Centrar el contenido horizontalmente
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(30.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         text = "Recetas Complejas",
@@ -486,7 +577,8 @@ fun SwipeablePages(navController: NavController) {
         // En modo vertical, mostrar los swipeables apilados uno debajo del otro
         Column(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceEvenly
+            horizontalAlignment = Alignment.CenterHorizontally
+
         ) {
             Text(
                 text = "Recetas Simples",
@@ -495,9 +587,14 @@ fun SwipeablePages(navController: NavController) {
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold
                 ),
-                modifier = Modifier.padding(bottom = 10.dp) // Espacio entre el título y el swipeable
+                modifier = Modifier.padding(20.dp) // Espacio entre el título y el swipeable
             )
-            SwipeablePagesSimples(navController, pagerStateSimples, displayedPlatos)
+
+            Box (
+                modifier = Modifier.padding(40.dp)
+            ) {
+                SwipeablePagesSimples(navController, pagerStateSimples, displayedPlatos)
+            }
 
             Text(
                 text = "Recetas Complejas",
@@ -506,9 +603,14 @@ fun SwipeablePages(navController: NavController) {
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold
                 ),
-                modifier = Modifier.padding(bottom = 10.dp) // Espacio entre el título y el swipeable
+                modifier = Modifier.padding(20.dp)
             )
-            SwipeablePagesComplejas(navController, pagerStateComplejas, displayedPlatos)
+
+            Box (
+                modifier = Modifier.padding(40.dp)
+            ) {
+                SwipeablePagesComplejas(navController, pagerStateComplejas, displayedPlatos)
+            }
         }
     }
 }
@@ -540,7 +642,8 @@ fun SwipeablePagesSimples(
                     painter = painterResource(id = displayedPlatos[index].imagen),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
                         .clickable {
                             val recipeId = displayedPlatos[index].id
                             navController.navigate(route = "${AppScreens.CarruselRecetas.route}/$recipeId")
@@ -553,7 +656,8 @@ fun SwipeablePagesSimples(
                         .background(Color(color = 0xFF930D0D))
                 ) {
                     Column(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .padding(bottom = 20.dp, start = 20.dp, end = 20.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -611,7 +715,8 @@ fun SwipeablePagesComplejas(
                     painter = painterResource(id = displayedPlatos[index].imagen),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
                         .clickable {
                             val recipeId = displayedPlatos[index].id
                             navController.navigate(route = "${AppScreens.CarruselRecetas.route}/$recipeId")
@@ -624,7 +729,8 @@ fun SwipeablePagesComplejas(
                         .background(Color(color = 0xFF930D0D))
                 ) {
                     Column(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .padding(bottom = 20.dp, start = 20.dp, end = 20.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
